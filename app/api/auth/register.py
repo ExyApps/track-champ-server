@@ -1,4 +1,3 @@
-from . import auth_bp
 import re
 from datetime import datetime
 from flask import request, jsonify
@@ -10,6 +9,8 @@ from app.api.auth.utils.codes import generate_digit_code
 from app.database.models.GenderEnum import match_gender
 from app.database.wrapper import authentication
 from app.validator.validator import Validator
+
+from . import auth_bp
 
 def generate_username(first_name: str, last_name: str) -> str:
 	"""
