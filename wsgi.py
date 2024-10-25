@@ -12,6 +12,9 @@ setup_login(app)
 # ERROR HANDLING
 @app.errorhandler(KeyError)
 def handle_key_error(e):
+	"""
+	Catch the error if there is a required field missing in the request
+	"""
 	app.logger.exception('An unhandled KeyError exception occured')
 	
 	return jsonify({
@@ -21,6 +24,9 @@ def handle_key_error(e):
 
 @app.errorhandler
 def handle_error(e):
+	"""
+	Catch any error that was not desired
+	"""
 	app.logger.exception('An unhandled exception occured')
 
 	return jsonify({

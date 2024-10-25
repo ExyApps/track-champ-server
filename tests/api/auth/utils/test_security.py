@@ -3,6 +3,9 @@ from app.api.auth.utils.security import encrypt_password
 class TestEncryptPassword:
     # Unittests
     def test_encrypt_password(self, password: str):
+        """
+        Check if the password and salt have the size and type desired
+        """
         enc_pass, salt = encrypt_password(password)
 
         assert type(enc_pass) == str
@@ -12,6 +15,9 @@ class TestEncryptPassword:
 
 
     def test_encrypt_password_is_equal(self, password: str):
+        """
+        Check if the password encrypted is always the same using the same salt
+        """
         enc_pass, salt = encrypt_password(password)
         sec_enc_pass, sec_salt = encrypt_password(password, salt)
 

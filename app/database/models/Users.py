@@ -23,6 +23,12 @@ class Users(db.Model):
 		return f'<User {self.id} {self.name} {self.username} {self.email}>'
 	
 	def to_json(self, excuded_fields = []):
+		"""
+		Transform the class information to a dictionary, and remove unwanted fields
+
+		Returns:
+			(dict): The user in dictionary format
+		"""
 		info = {
 			'id': self.id,
 			'username': self.username,

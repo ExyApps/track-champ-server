@@ -9,12 +9,30 @@ class Validator:
 	# GLOBAL METHODS
 	@staticmethod
 	def is_empty(var: str) -> bool:
+		"""
+		Check if the variable is an empty string
+
+		Parameters:
+			var (str): The variable to be tested
+
+		Returns:
+			(bool): True if is empty, False otherwise
+		"""
 		return not var
 	
 
 	#SPECIFIC METHODS
 	@staticmethod
 	def first_name(first_name: str) -> Tuple[Union[bool, str]]:
+		"""
+		Validate the first_name field
+
+		Parameters:
+			first_name (str): The user's first_name
+
+		Returns:
+			(bool, str): The success status and a message if the checks fail
+		"""
 		if Validator.is_empty(first_name):
 			return False, "O nome próprio é obrigatório."
 
@@ -23,6 +41,15 @@ class Validator:
 
 	@staticmethod
 	def last_name(last_name: str) -> Tuple[Union[bool, str]]:
+		"""
+		Validate the last_name field
+
+		Parameters:
+			last_name (str): The user's last_name
+
+		Returns:
+			(bool, str): The success status and a message if the checks fail
+		"""
 		if Validator.is_empty(last_name):
 			return False, "O apelido é obrigatório."
 
@@ -31,6 +58,15 @@ class Validator:
 
 	@staticmethod
 	def username(username: str) -> Tuple[Union[bool, str]]:
+		"""
+		Validate the username field
+
+		Parameters:
+			username (str): The user's username
+
+		Returns:
+			(bool, str): The success status and a message if the checks fail
+		"""
 		if Validator.is_empty(username):
 			return False, "O nome de utilizador é obrigatório."
 		
@@ -39,6 +75,15 @@ class Validator:
 
 	@staticmethod
 	def email(email: str) -> Tuple[Union[bool, str]]:
+		"""
+		Validate the email field
+
+		Parameters:
+			email (str): The user's email
+
+		Returns:
+			(bool, str): The success status and a message if the checks fail
+		"""
 		if Validator.is_empty(email):
 			return False, "O email é obrigatório."
 		
@@ -50,6 +95,15 @@ class Validator:
 
 	@staticmethod
 	def date(date: str) -> Tuple[Union[bool, str]]:
+		"""
+		Validate the date field
+
+		Parameters:
+			date (str): The user's date
+
+		Returns:
+			(bool, str): The success status and a message if the checks fail
+		"""
 		if Validator.is_empty(date):
 			return False, "A data é obrigatória."
 
@@ -65,6 +119,15 @@ class Validator:
 
 	@staticmethod
 	def gender(gender: str) -> Tuple[Union[bool, str]]:
+		"""
+		Validate the gender field
+
+		Parameters:
+			gender (str): The user's gender
+
+		Returns:
+			(bool, str): The success status and a message if the checks fail
+		"""
 		if Validator.is_empty(gender):
 			return False, "O género é obrigatório."
 
@@ -76,6 +139,15 @@ class Validator:
 	
 	@staticmethod
 	def password(password: str) -> Tuple[Union[bool, str]]:
+		"""
+		Validate the password field
+
+		Parameters:
+			password (str): The user's password
+
+		Returns:
+			(bool, str): The success status and a message if the checks fail
+		"""
 		if Validator.is_empty(password):
 			return False, "A password é obrigatória."
 
