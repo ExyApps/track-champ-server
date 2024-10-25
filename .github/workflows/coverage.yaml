@@ -23,4 +23,6 @@ jobs:
       run: pytest --cov --cov-report=xml
 
     - name: Upload to Codacy 
-      run: python-codacy-coverage -r coverage.xml
+      run: python-codacity-coverage -r coverage.xml
+      with:
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
