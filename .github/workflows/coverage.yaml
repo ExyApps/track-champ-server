@@ -29,7 +29,6 @@ jobs:
 
   codacy-security-scan:
     name: Codacy Security Scan
-    needs: build
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -54,7 +53,6 @@ jobs:
 
   codacy-coverage-reporter:
     name: Codacy Coverage Reporter
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
