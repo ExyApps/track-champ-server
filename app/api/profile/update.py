@@ -16,7 +16,8 @@ def update():
     payload = request.json
 
     for k, v in payload.items():
-        if k in ['id', 'profileImage']: continue
+        if k in ['id', 'profileImage']:
+            continue
         snake_case_key = re.sub(r'(?<!^)(?=[A-Z])', '_', k).lower()
         verifier = getattr(Validator, snake_case_key)
         valid, message = verifier(v)

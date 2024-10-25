@@ -7,7 +7,7 @@ class TestGenerateDigitCode:
         """
         Check if the argument is a string
         """
-        return type(code) == str
+        return isinstance(code, str)
 
     def format_is_valid(self, code: str):
         """
@@ -43,7 +43,7 @@ class TestGenerateSessionCookie:
         """
         Check if the argument is a string
         """
-        return type(cookie) == str
+        return isinstance(cookie, str)
 
     def format_is_valid(self, cookie: str):
         """

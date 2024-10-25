@@ -8,9 +8,9 @@ class TestEncryptPassword:
         """
         enc_pass, salt = encrypt_password(password)
 
-        assert type(enc_pass) == str
+        assert isinstance(enc_pass, str)
         assert len(enc_pass) == 60
-        assert type(salt) == str
+        assert isinstance(salt, str)
         assert len(salt) == 29
 
 

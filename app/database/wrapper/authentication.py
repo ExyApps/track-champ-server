@@ -83,7 +83,8 @@ def update_user(payload: dict):
         user = Users.query.filter_by(id = payload['id']).first()
 
         for k, v in payload.items():
-            if k == 'id': continue
+            if k == 'id':
+                continue
             setattr(user, k, v)
 
         db.session.commit()
