@@ -3,7 +3,7 @@ from typing import Union
 import re
 import datetime
 
-from app.database.models.GenderEnum import GenderEnum, match_gender
+from app.database.models.GenderEnum import GenderEnum
 
 class Validator:
 	# GLOBAL METHODS
@@ -59,7 +59,7 @@ class Validator:
 		try:
 			datetime.date.fromisoformat(date)
 			return True, ""
-		except:
+		except ValueError:
 			return False, 'Essa data é inválida. Formato correto: yyyy-mm-dd.'
 		
 

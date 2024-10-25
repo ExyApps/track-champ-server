@@ -1,5 +1,3 @@
-import pytest
-
 from app.validator.validator import Validator
 
 class TestValidator:

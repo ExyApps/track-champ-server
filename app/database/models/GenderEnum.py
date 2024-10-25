@@ -1,4 +1,3 @@
-from extension import db
 from enum import Enum
 
 class GenderEnum(Enum):

@@ -4,7 +4,7 @@ name: Testing Coverage
 
 jobs:
   coverage:
-    name: Build
+    name: Coverage
     runs-on: ubuntu-latest
     steps:
 
@@ -22,9 +22,5 @@ jobs:
     - name: Run Pytest
       run: pytest --cov --cov-report=xml
 
-    - name: Get Cover 
-      uses: orgoro/coverage@v3.2
-      with:
-          coverageFile: coverage.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          thresholdAll: 0.9
+    - name: Upload to Codacy 
+      runs: python-codacy-coverage -r coverage.xml

@@ -1,6 +1,4 @@
-import random
 import secrets
-import string
 
 def generate_digit_code(length: int) -> str:
 	"""

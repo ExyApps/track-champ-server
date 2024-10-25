@@ -36,9 +36,9 @@ def create_new_user(
 		db.session.commit()
 
 
-def get_user(id: int):
+def get_user(_id: int):
 	with app.app_context():
-		return Users.query.filter_by(id=id).first()
+		return Users.query.filter_by(id=_id).first()
 
 
 def update_user(payload: dict):
