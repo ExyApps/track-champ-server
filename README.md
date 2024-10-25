@@ -1,1 +1,2 @@
 # Track Champ Server
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/34e7f7f94b864ad9a1732efd3ff5f7eb)](https://app.codacy.com/gh/ExyApps/track-champ-server/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
