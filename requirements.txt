@@ -3,6 +3,6 @@ Flask-Cors
 Flask-SQLAlchemy
 bcrypt
 python-dotenv
-psycopg2
 pytest
 pytest-cov
+coveralls
