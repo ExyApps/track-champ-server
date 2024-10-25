@@ -3,7 +3,7 @@ on: ["push", "pull_request"]
 name: Testing Coverage
 
 jobs:
-  build:
+  coverage:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -22,5 +22,8 @@ jobs:
     - name: Run Pytest
       run: pytest --cov --cov-report=xml
 
-    - name: Coveralls
-      uses: coverallsapp/github-action@v2
+    - name: Get Cover 
+      uses: orgoro/coverage@v3.2
+      with:
+          coverageFile: coverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
