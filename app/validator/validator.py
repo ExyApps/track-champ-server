@@ -1,6 +1,7 @@
 from typing import Tuple
 from typing import Union
 import re
+import datetime
 
 from app.database.models.GenderEnum import GenderEnum, match_gender
 
@@ -52,8 +53,15 @@ class Validator:
 		if Validator.is_empty(date):
 			return False, "A data é obrigatória."
 
-		return True, ""
+		if not re.match(r'\d{4}-\d{2}-\d{2}', date):
+			return False, 'A data tem o formato errado. Formato correto: yyyy-mm-dd.'
 
+		try:
+			datetime.date.fromisoformat(date)
+			return True, ""
+		except:
+			return False, 'Essa data é inválida. Formato correto: yyyy-mm-dd.'
+		
 
 	@staticmethod
 	def gender(gender: str) -> Tuple[Union[bool, str]]:
