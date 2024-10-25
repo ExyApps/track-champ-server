@@ -17,7 +17,7 @@ def account_exists(email: str) -> bool:
 	"""
 	with app.app_context():
 		return Users.query.filter_by(email=email).first() is not None
-		
+
 
 def create_new_user(
 	username: str,
@@ -92,7 +92,7 @@ def update_user(payload: dict):
 def get_salt(email: str) -> str:
 	"""
 	Get the salt associated to the account with the given email
-	
+
 	Parameters:
 		email (str): The user's email
 

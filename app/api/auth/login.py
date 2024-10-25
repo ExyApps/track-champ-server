@@ -22,12 +22,12 @@ def login():
 	password, _ = encrypt_password(payload['password'], salt)
 
 	user = authentication.login(payload['email'], password)
-	
+
 	if user is None:
 		return jsonify({ 'error': 'Essa combinação de email/password não existe', 'field': 'email' }), HTTPStatus.UNAUTHORIZED
-	
+
 	authentication.update_last_login(user)
-	
+
 	info = user.to_json()
 
 	return jsonify({

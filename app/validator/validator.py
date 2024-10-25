@@ -19,7 +19,7 @@ class Validator:
 			(bool): True if is empty, False otherwise
 		"""
 		return not var
-	
+
 
 	#SPECIFIC METHODS
 	@staticmethod
@@ -53,8 +53,8 @@ class Validator:
 		if Validator.is_empty(last_name):
 			return False, "O apelido é obrigatório."
 
-		return True, ""	
-	
+		return True, ""
+
 
 	@staticmethod
 	def username(username: str) -> Tuple[Union[bool, str]]:
@@ -69,9 +69,9 @@ class Validator:
 		"""
 		if Validator.is_empty(username):
 			return False, "O nome de utilizador é obrigatório."
-		
+
 		return True, ""
-	
+
 
 	@staticmethod
 	def email(email: str) -> Tuple[Union[bool, str]]:
@@ -86,12 +86,12 @@ class Validator:
 		"""
 		if Validator.is_empty(email):
 			return False, "O email é obrigatório."
-		
+
 		if not re.match(r'\S+@\S+\.\S+', email):
 			return False, "O formato de email é inválido."
-		
+
 		return True, ""
-	
+
 
 	@staticmethod
 	def date(date: str) -> Tuple[Union[bool, str]]:
@@ -115,7 +115,7 @@ class Validator:
 			return True, ""
 		except ValueError:
 			return False, 'Essa data é inválida. Formato correto: yyyy-mm-dd.'
-		
+
 
 	@staticmethod
 	def gender(gender: str) -> Tuple[Union[bool, str]]:
@@ -135,8 +135,8 @@ class Validator:
 			return False, "O género é inválido."
 
 		return True, ""
-		
-	
+
+
 	@staticmethod
 	def password(password: str) -> Tuple[Union[bool, str]]:
 		"""
@@ -153,16 +153,16 @@ class Validator:
 
 		if len(password) < 8:
 			return False, "A password deve ter pelo menos 8 caracteres."
-	
+
 		if password == password.lower():
 			return False, "A password tem de ter pelo menos 1 letra maiúscula."
-	
+
 		if password == password.upper():
 			return False, "A password tem de ter pelo menos 1 letra minúscula."
-		
+
 		if not re.search(r'\d', password):
 			return False, "A password tem de ter pelo menos 1 número."
-	
+
 		if not re.search(r'[ `!@#$%^&*()_+\-=[\]{};\':"\\|,.<>/?~]', password):
 			return False, "A password tem de ter pelo menos 1 caracter especial."
 

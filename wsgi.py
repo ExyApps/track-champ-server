@@ -16,7 +16,7 @@ def handle_key_error(e):
 	Catch the error if there is a required field missing in the request
 	"""
 	app.logger.exception('An unhandled KeyError exception occured')
-	
+
 	return jsonify({
 		'message': 'Pedido inválido, confirme que envia toda a informação necessária'
 	}), HTTPStatus.BAD_REQUEST

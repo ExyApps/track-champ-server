@@ -20,7 +20,7 @@ def generate_username(first_name: str, last_name: str) -> str:
 
 	while username is None or authentication.username_exists(username):
 		username = first_name.lower() + last_name.lower() + generate_digit_code(4)
-	
+
 	return username
 
 @auth_bp.route('/register', methods=['POST'])
@@ -42,7 +42,7 @@ def register():
 
 	if (authentication.account_exists(payload['email'])):
 		return jsonify({ 'error': 'Este email já tem uma conta associada.', 'field': 'email' }), HTTPStatus.CONFLICT
-	
+
 	authentication.create_new_user(
 		username=generate_username(payload['firstName'], payload['lastName']),
 		first_name=payload['firstName'].strip(),
@@ -53,5 +53,5 @@ def register():
 		birthday=datetime.strptime(payload['date'], '%Y-%M-%d').date(),
 		gender=match_gender(payload['gender'])
 	)
-	
+
 	return jsonify({ 'success': True }), HTTPStatus.CREATED

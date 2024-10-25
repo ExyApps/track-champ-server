@@ -8,7 +8,7 @@ class TestGenerateDigitCode:
         Check if the argument is a string
         """
         return type(code) == str
-    
+
     def format_is_valid(self, code: str):
         """
         Check if the argument is a digit
@@ -44,13 +44,13 @@ class TestGenerateSessionCookie:
         Check if the argument is a string
         """
         return type(cookie) == str
-    
+
     def format_is_valid(self, cookie: str):
         """
         Check if the argument is a alpha numeric and lower case
         """
         return cookie.isalnum() and cookie.lower() == cookie
-    
+
     # Unittests
     def test_generate_session_cookie(self):
         """

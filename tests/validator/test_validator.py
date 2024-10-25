@@ -59,7 +59,7 @@ class TestValidator:
 
         assert not success
         assert message
-    
+
 
     def test_validate_email(self, email: str):
         """
@@ -110,7 +110,7 @@ class TestValidator:
         assert not success
         assert message
 
-    
+
     def test_validate_invalid_value_date(self, invalid_value_date: str):
         """
         Check if the field is valid
@@ -150,7 +150,7 @@ class TestValidator:
         assert not success
         assert message
 
-    
+
     def test_validate_invalid_gender(self, invalid_gender: str):
         """
         Check if the field is valid
@@ -180,7 +180,7 @@ class TestValidator:
         assert not success
         assert message
 
-    
+
     def test_validate_invalid_small_password(self, invalid_small_password: str):
         """
         Check if the field is valid
@@ -200,7 +200,7 @@ class TestValidator:
         assert not success
         assert message
 
-    
+
     def test_validate_invalid_lower_password(self, invalid_lower_password: str):
         """
         Check if the field is valid
@@ -220,7 +220,7 @@ class TestValidator:
         assert not success
         assert message
 
-    
+
     def test_validate_invalid_special_char_password(self, invalid_special_char_password: str):
         """
         Check if the field is valid

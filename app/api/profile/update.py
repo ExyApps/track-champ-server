@@ -23,10 +23,10 @@ def update():
 
         if not valid:
             return { 'error': message, 'field': k }, HTTPStatus.BAD_REQUEST
-        
+
     if 'gender' in payload:
         payload['gender'] = match_gender(payload['gender'])
-		
+
     profile_image = payload['profileImage']
 
     image_path = f'files/profile_images/user{payload["id"]}.png'
@@ -41,7 +41,7 @@ def update():
 
     authentication.update_user(payload)
     user = authentication.get_user(payload['id'])
-	
+
     info = user.to_json()
 
     return jsonify({ 'success': True, 'info': info }), HTTPStatus.OK
