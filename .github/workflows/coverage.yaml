@@ -24,3 +24,5 @@ jobs:
 
     - name: Run codacy-coverage-reporter
       run: python-codacy-coverage
+      env:
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
