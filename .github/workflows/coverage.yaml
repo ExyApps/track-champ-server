@@ -3,29 +3,30 @@ on: ["push", "pull_request"]
 name: Testing Coverage
 
 jobs:
-  # coverage:
-  #   name: Coverage
-  #   runs-on: ubuntu-latest
-  #   steps:
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
 
-  #   - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-  #   - name: Use Python 3.12
-  #     uses: actions/setup-python@v5
-  #     with:
-  #       python-version: '3.12'
-  #       cache: 'pip'
+    - name: Use Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
 
-  #   - name: Install Dependencies
-  #     run: pip install -r requirements.txt
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
 
-  #   - name: Run Pytest
-  #     run: pytest --cov --cov-report=xml
+    - name: Run Pytest
+      run: pytest --cov --cov-report=xml
 
-  #   - name: Run codacy-coverage-reporter
-  #     run: python-codacy-coverage
-  #     env:
-  #       CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+    - name: Run Codacy Coverage Reporter
+      uses: codacy/codacy-coverage-reporter-action@v1.3.0
+      with:
+        coverage-reports: coverage.xml
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
   codacy-security-scan:
     name: Codacy Security Scan
@@ -62,8 +63,4 @@ jobs:
         with:
           name: tests-and-target
           path: target
-      - name: Run Codacy Coverage Reporter
-        uses: codacy/codacy-coverage-reporter-action@v1.3.0
-        with:
-          coverage-reports: coverage.xml
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      
