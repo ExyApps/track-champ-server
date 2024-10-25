@@ -15,9 +15,12 @@ jobs:
       with:
         python-version: '3.12'
         cache: 'pip'
-        
+
     - name: Install Dependencies    
       run: pip install -r requirements.txt
+
+    - name: Run Pytest
+      run: coverage run --source=mypkg -m pytest
 
     - name: Coveralls
       uses: coverallsapp/github-action@v2
