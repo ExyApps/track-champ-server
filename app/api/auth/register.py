@@ -1,6 +1,6 @@
 import re
 from datetime import datetime
-from flask import request, jsonify
+from flask import request, jsonify, g
 from http import HTTPStatus
 
 from app.api.auth.utils.security import encrypt_password
@@ -27,6 +27,9 @@ def register():
     """
     Performs the registration into the app
     """
+    if g.user_id:
+        return {'success': True, 'detail': 'Já tem uma sessão iniciada'}, HTTPStatus.TEMPORARY_REDIRECT
+
     payload = request.json
 
     password, salt = encrypt_password(payload['password'])
@@ -35,9 +38,9 @@ def register():
         return jsonify({ 'error': 'Este email já tem uma conta associada.', 'field': 'email' }), HTTPStatus.CONFLICT
 
     authentication.create_new_user(
-        username=generate_username(payload['firstName'], payload['lastName']),
-        first_name=payload['firstName'].strip(),
-        last_name=payload['lastName'].strip(),
+        username=generate_username(payload['first_name'], payload['last_name']),
+        first_name=payload['first_name'].strip(),
+        last_name=payload['last_name'].strip(),
         email=payload['email'].strip(),
         password=password,
         salt=salt,

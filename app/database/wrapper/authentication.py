@@ -47,8 +47,8 @@ def create_new_user(
     with app.app_context():
         new_user = Users(
             username=username,
-            firstName=first_name,
-            lastName=last_name,
+            first_name=first_name,
+            last_name=last_name,
             email=email,
             password=password,
             salt=salt,
@@ -161,7 +161,7 @@ def store_session_token(id: int, token: str) -> None:
             The session token
     """
     with app.app_context():
-        st = SessionTokens(id = id, token = token)
+        st = SessionTokens(user_id = id, token = token)
         db.session.add(st)
         db.session.commit()
 

@@ -12,8 +12,8 @@ from app.database.models.GenderEnum import GenderEnum
 def user_model():
     return Users(
         username='johndoe',
-        firstName='John',
-        lastName='Doe',
+        first_name='John',
+        last_name='Doe',
         email='johndoe@gmail.com',
         password='Password1!',
         salt='somesalt',

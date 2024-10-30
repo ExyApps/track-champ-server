@@ -6,8 +6,8 @@ class Users(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(110), nullable=False, unique=True)
-    firstName = db.Column(db.String(50), nullable=False)
-    lastName = db.Column(db.String(50), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(64), nullable=False)
     salt = db.Column(db.String(30), nullable=False)
@@ -20,7 +20,7 @@ class Users(db.Model):
     last_login = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
-        return f'<User {self.id} - {self.firstName} {self.lastName} - {self.username} - {self.email}>'
+        return f'<User {self.id} - {self.first_name} {self.last_name} - {self.username} - {self.email}>'
 
     def to_json(self, excuded_fields = []):
         """
@@ -32,8 +32,8 @@ class Users(db.Model):
         info = {
             'id': self.id,
             'username': self.username,
-            'firstName': self.firstName,
-            'lastName': self.lastName,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
             'email': self.email,
             'birthday': self.birthday,
             'gender': self.gender.value,

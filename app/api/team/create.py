@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, g
 from http import HTTPStatus
 
 from app.database.wrapper.teams import create_team
@@ -11,6 +11,9 @@ def create():
     """
     Creates a team in the database
     """
+    if not g.user_id:
+        return {'success': False, 'detail': 'Não tem uma sessão iniciada'}, HTTPStatus.TEMPORARY_REDIRECT
+
     payload = request.json
 
     team = create_team(payload['name'], payload['description'], payload['public'], payload.get('profile_image', None))

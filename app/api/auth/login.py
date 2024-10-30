@@ -1,8 +1,9 @@
-from flask import request, jsonify
+from flask import request, jsonify, g
 from http import HTTPStatus
 
 from app.api.auth.utils.security import encrypt_password
 from app.database.wrapper import authentication
+from app.api.auth.utils.codes import generate_session_cookie
 
 from . import auth_bp
 
@@ -11,6 +12,9 @@ def login():
     """
     Performs the login into the system
     """
+    if g.user_id:
+        return {'success': True, 'detail': 'Já tem uma sessão iniciada'}, HTTPStatus.TEMPORARY_REDIRECT
+
     payload = request.json
 
     account_exists = authentication.account_exists(payload['email'])
@@ -26,11 +30,15 @@ def login():
     if user is None:
         return jsonify({ 'error': 'Essa combinação de email/password não existe', 'field': 'email' }), HTTPStatus.UNAUTHORIZED
 
-    authentication.update_last_login(user)
+    session_token = generate_session_cookie()
+    authentication.store_session_token(user.id, session_token)
 
     info = user.to_json()
 
-    return jsonify({
+    response = jsonify({
         'success': True,
         'info': info
-    }), HTTPStatus.OK
+    })
+    response.set_cookie('session_token', session_token)
+
+    return response, HTTPStatus.OK
