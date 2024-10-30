@@ -11,7 +11,7 @@ class Teams(db.Model):
     public = db.Column(db.Boolean, default=False)
     profile_image = db.Column(db.String(50), nullable=True)
 
-    createdIn = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    created_in = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
 
     def __repr__(self):
@@ -31,7 +31,7 @@ class Teams(db.Model):
             'description': self.description,
             'public': self.public,
             'profile_image': self.profile_image,
-            'createdIn': self.createdIn,
+            'created_in': self.created_in,
         }
 
         for field in excuded_fields:

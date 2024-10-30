@@ -19,5 +19,5 @@ def user_model():
         salt='somesalt',
         birthday='2000-01-01',
         gender=GenderEnum.MALE,
-        createdIn=datetime.datetime.now(),
+        created_in=datetime.datetime.now(),
     )

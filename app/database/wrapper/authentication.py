@@ -52,7 +52,7 @@ def create_new_user(
             salt=salt,
             birthday=birthday,
             gender=gender,
-            createdIn=datetime.now(),
+            created_in=datetime.now(),
         )
         db.session.add(new_user)
         db.session.commit()
@@ -128,7 +128,7 @@ def update_last_login(user: Users) -> None:
     """
     with app.app_context():
         db_user = Users.query.filter_by(id=user.id).first()
-        db_user.lastLogIn = datetime.now()
+        db_user.last_login = datetime.now()
         db.session.commit()
 
 

@@ -3,6 +3,7 @@ from typing import List
 from extension import app, db
 
 from app.database.models.Teams import Teams
+from app.database.models.TeamUsers import TeamUsers
 
 
 def create_team(name: str, description: str, public: bool, profile_image: str) -> Teams:
@@ -114,3 +115,63 @@ def team_exists(id: int) -> bool:
     """
     with app.app_context():
         return Teams.query.get(id) is not None
+    
+
+def get_team_users(id: int) -> List[int]:
+    """
+    Get a list of the users' id that are in a team
+
+    Parameters
+    ----------
+        id: int
+            The team's id
+
+    Returns
+    -------
+        List[int]
+            A list of all the users' ids
+    """
+    with app.app_context():
+        ids = [tu.user_id for tu in TeamUsers.query.filter_by(team_id=id).all()]
+        return ids
+    
+
+def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False) -> None:
+    """
+    Adds a user to a team
+
+    Parameters
+    ----------
+        user_id: int
+            The user's id
+
+        team_id: int
+            The team's id
+
+        is_admin: bool
+            If the user should be an admin or not
+    """
+    tu = TeamUsers(
+        user_id = user_id,
+        team_id = team_id,
+        is_admin = is_admin
+    )
+
+    db.session.add(tu)
+    db.session.commit()
+
+
+def delete_team_users(id: int) -> None:
+    """
+    Delete all the rows with the team's id
+
+    Parameters
+    ----------
+        id: int
+            The team's id
+    """
+    rows = TeamUsers.query.filter_by(team_id = id).all()
+
+    for row in rows:
+        db.session.delete(row)
+    db.session.commit()

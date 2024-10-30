@@ -16,8 +16,8 @@ class Users(db.Model):
     profile_image = db.Column(db.String(50), nullable=True)
     activated = db.Column(db.Boolean, nullable=False, default=False)
 
-    createdIn = db.Column(db.DateTime, nullable=False)
-    lastLogIn = db.Column(db.DateTime, nullable=True)
+    created_in = db.Column(db.DateTime, nullable=False)
+    last_login = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
         return f'<User {self.id} - {self.firstName} {self.lastName} - {self.username} - {self.email}>'
@@ -39,8 +39,8 @@ class Users(db.Model):
             'gender': self.gender.value,
             'profile_image': self.profile_image,
             'activated': self.activated,
-            'createdIn': self.createdIn,
-            'lastLogIn': self.lastLogIn
+            'created_in': self.created_in,
+            'last_login': self.last_login
         }
 
         for field in excuded_fields:
