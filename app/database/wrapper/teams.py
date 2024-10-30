@@ -96,3 +96,21 @@ def get_public_teams(search: str = '', offset: int = 0, limit: int = 10) -> List
             .all()
         )
         return teams
+    
+
+def team_exists(id: int) -> bool:
+    """
+    Check if a team exists
+
+    Parameters
+    ----------
+        id: int
+            The team's id
+
+    Returns
+    -------
+        bool
+            True if the team exists, False otherwise
+    """
+    with app.app_context():
+        return Teams.query.get(id) is not None
