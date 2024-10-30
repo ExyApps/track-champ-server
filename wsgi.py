@@ -5,6 +5,8 @@ from extension import app, db
 
 from app.api.auth import auth_bp
 from app.api.profile import profile_bp
+from app.api.team import team_bp
+
 from app.logging.setup import setup_login
 
 setup_login(app)
@@ -22,7 +24,7 @@ def handle_key_error(e):
     }), HTTPStatus.BAD_REQUEST
 
 
-@app.errorhandler
+@app.errorhandler(Exception)
 def handle_error(e):
     """
     Catch any error that was not desired
@@ -40,6 +42,7 @@ with app.app_context():
 
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(profile_bp, url_prefix='/profile')
+app.register_blueprint(team_bp, url_prefix='/team')
 
 if __name__ == "__main__":
     app.run()

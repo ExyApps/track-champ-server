@@ -13,14 +13,14 @@ class Users(db.Model):
     salt = db.Column(db.String(30), nullable=False)
     birthday = db.Column(db.Date, nullable=False)
     gender = db.Column(db.Enum(GenderEnum), nullable=False)
-    profileImage = db.Column(db.String(50), nullable=True)
+    profile_image = db.Column(db.String(50), nullable=True)
     activated = db.Column(db.Boolean, nullable=False, default=False)
 
     createdIn = db.Column(db.DateTime, nullable=False)
     lastLogIn = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
-        return f'<User {self.id} {self.name} {self.username} {self.email}>'
+        return f'<User {self.id} - {self.firstName} {self.lastName} - {self.username} - {self.email}>'
 
     def to_json(self, excuded_fields = []):
         """
@@ -37,7 +37,7 @@ class Users(db.Model):
             'email': self.email,
             'birthday': self.birthday,
             'gender': self.gender.value,
-            'profileImage': self.profileImage,
+            'profile_image': self.profile_image,
             'activated': self.activated,
             'createdIn': self.createdIn,
             'lastLogIn': self.lastLogIn

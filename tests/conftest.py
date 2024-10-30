@@ -3,6 +3,7 @@
 # from app.database.models import User  # Example model import (adapt as needed)
 
 from tests._fixtures.input_fields import *
+from tests._fixtures.database_models import *
 
 # # --- Fixtures ---
 
