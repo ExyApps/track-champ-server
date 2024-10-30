@@ -23,6 +23,28 @@ class TestValidator:
         assert len(errors) == 1
 
 
+    def test_validate_boolean_field(self, boolean_field: bool):
+        """
+        Check if the field is valid
+        """
+        errors = Validator.validate_payload(
+            {'bool': boolean_field}
+        )
+
+        assert not errors
+
+    
+    def test_validate_ignore_field(self, first_name):
+        """
+        Check if the field is valid
+        """
+        errors = Validator.validate_payload(
+            {'id': first_name}
+        )
+
+        assert not errors
+
+
     def test_validate_email(self, email: str):
         """
         Check if the field is valid
