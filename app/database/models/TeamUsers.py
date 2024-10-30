@@ -7,7 +7,7 @@ class TeamUsers(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('acc_users.id'), primary_key=True, nullable=False)
     team_id = db.Column(db.Integer, db.ForeignKey('acc_teams.id'), primary_key=True, nullable=False)
-    admin = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(db.Boolean, default=False)
 
     joined_in = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
