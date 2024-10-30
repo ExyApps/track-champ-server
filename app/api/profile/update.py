@@ -16,7 +16,7 @@ def update():
     payload = request.json
 
     for k, v in payload.items():
-        if k in ['id', 'profileImage']:
+        if k in ['id', 'profile_image']:
             continue
         snake_case_key = re.sub(r'(?<!^)(?=[A-Z])', '_', k).lower()
         verifier = getattr(Validator, snake_case_key)
@@ -28,14 +28,14 @@ def update():
     if 'gender' in payload:
         payload['gender'] = match_gender(payload['gender'])
 
-    profile_image = payload['profileImage']
+    profile_image = payload['profile_image']
 
     image_path = f'files/profile_images/user{payload["id"]}.png'
     if profile_image is not None:
         img_type, content = profile_image.split(',')
         with open(image_path, "wb") as fh:
-            fh.write(base64.b64decode(payload['profileImage']))
-        payload['profileImage'] = f'files/profile_images/user{payload["id"]}.png'
+            fh.write(base64.b64decode(payload['profile_image']))
+        payload['profile_image'] = f'files/profile_images/user{payload["id"]}.png'
     else:
         if os.path.exists(image_path):
             os.remove(image_path)

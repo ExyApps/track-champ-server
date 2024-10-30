@@ -2,8 +2,7 @@ from flask import request, jsonify
 from http import HTTPStatus
 
 from app.database.wrapper.teams import delete_team
-
-from app.validator.validator import Validator
+from app.database.wrapper.teams import team_exists
 
 from . import team_bp
 
@@ -17,6 +16,9 @@ def delete(id: int):
         id: int
             The team's id
     """
+    if not team_exists(id):
+        return jsonify({'success': False, 'detail': 'A equipa não existe.'}), HTTPStatus.NOT_FOUND
+
     delete_team(id)
 
     return jsonify({'success': True}), HTTPStatus.OK
