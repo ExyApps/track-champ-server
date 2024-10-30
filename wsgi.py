@@ -7,9 +7,13 @@ from app.api.auth import auth_bp
 from app.api.profile import profile_bp
 from app.api.team import team_bp
 
-from app.logging.setup import setup_login
+from app.endpoint_wrappers.logging import setup_logs
+from app.endpoint_wrappers.context import setup_context
+from app.endpoint_wrappers.context import setup_body_verification
 
-setup_login(app)
+setup_context(app)
+setup_logs(app)
+setup_body_verification(app)
 
 # ERROR HANDLING
 @app.errorhandler(KeyError)

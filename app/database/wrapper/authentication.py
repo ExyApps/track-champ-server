@@ -1,9 +1,11 @@
+from typing import *
 from datetime import datetime
 
 from extension import app, db
 
 from app.database.models.Users import Users
 from app.database.models.GenderEnum import GenderEnum
+from app.database.models.SessionTokens import SessionTokens
 
 def account_exists(email: str) -> bool:
     """
@@ -144,3 +146,40 @@ def username_exists(username: str) -> bool:
     """
     with app.app_context():
         return Users.query.filter_by(username=username).first() is not None
+
+
+def store_session_token(id: int, token: str) -> None:
+    """
+    Store the session token for a user
+
+    Parameters
+    ----------
+        id: int
+            The user's id
+
+        token: str
+            The session token
+    """
+    with app.app_context():
+        st = SessionTokens(id = id, token = token)
+        db.session.add(st)
+        db.session.commit()
+
+
+def get_user_by_session_token(token: str) -> Union[int, None]:
+    """
+    Get the user's id using the session token provided
+
+    Parameters
+    ----------
+        token: str
+            The session token of the user
+
+    Returns
+    -------
+        Union[int, None]
+            The user's id if the token exists, otherwise None
+    """
+    with app.app_context():
+        row = SessionTokens.query.filter_by(token = token).first()
+        return row.user_id if row else None

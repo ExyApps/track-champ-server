@@ -4,7 +4,6 @@ from flask import request, jsonify
 from http import HTTPStatus
 
 from app.database.wrapper import authentication
-from app.validator.validator import Validator
 
 from app.database.models.GenderEnum import match_gender
 
@@ -14,16 +13,6 @@ def update():
     Update the profile
     """
     payload = request.json
-
-    for k, v in payload.items():
-        if k in ['id', 'profile_image']:
-            continue
-        snake_case_key = re.sub(r'(?<!^)(?=[A-Z])', '_', k).lower()
-        verifier = getattr(Validator, snake_case_key)
-        valid, message = verifier(v)
-
-        if not valid:
-            return { 'error': message, 'field': k }, HTTPStatus.BAD_REQUEST
 
     if 'gender' in payload:
         payload['gender'] = match_gender(payload['gender'])

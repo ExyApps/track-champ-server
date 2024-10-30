@@ -8,7 +8,6 @@ from app.api.auth.utils.codes import generate_digit_code
 
 from app.database.models.GenderEnum import match_gender
 from app.database.wrapper import authentication
-from app.validator.validator import Validator
 
 from . import auth_bp
 
@@ -29,14 +28,6 @@ def register():
     Performs the registration into the app
     """
     payload = request.json
-
-    for k, v in payload.items():
-        snake_case_key = re.sub(r'(?<!^)(?=[A-Z])', '_', k).lower()
-        verifier = getattr(Validator, snake_case_key)
-        valid, message = verifier(v)
-
-        if not valid:
-            return { 'error': message, 'field': k }, HTTPStatus.BAD_REQUEST
 
     password, salt = encrypt_password(payload['password'])
 
