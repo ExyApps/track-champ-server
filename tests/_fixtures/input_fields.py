@@ -89,3 +89,7 @@ def invalid_number_password():
 def invalid_special_char_password():
     "A test fixture containing an invalid password"
     return 'Password1'
+
+@pytest.fixture
+def salt():
+	return '$2b$12$//OocYPD4SAe5dwEQwtEWO'

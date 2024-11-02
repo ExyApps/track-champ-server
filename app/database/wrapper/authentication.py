@@ -1,11 +1,20 @@
 from typing import *
 from datetime import datetime
 
-from extension import app, db
+from flask import current_app as app
 
 from app.database.models.Users import Users
 from app.database.models.GenderEnum import GenderEnum
 from app.database.models.SessionTokens import SessionTokens
+
+def get_users() -> int:
+	"""
+	Get the number of users in the database
+
+	Returns:
+		(int): The number of users
+	"""
+	return Users.query.all()
 
 def account_exists(email: str) -> bool:
     """
@@ -17,8 +26,7 @@ def account_exists(email: str) -> bool:
     Returns:
         (bool): True if the email is being used, and False otherwise
     """
-    with app.app_context():
-        return Users.query.filter_by(email=email).first() is not None
+    return Users.query.filter_by(email=email).first() is not None
 
 
 def create_new_user(
@@ -44,20 +52,21 @@ def create_new_user(
         birthday (str): The user's birthday
         gender (GenderEnum): The user's gender
     """
-    with app.app_context():
-        new_user = Users(
-            username=username,
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            password=password,
-            salt=salt,
-            birthday=birthday,
-            gender=gender,
-            created_in=datetime.now(),
-        )
-        db.session.add(new_user)
-        db.session.commit()
+    new_user = Users(
+		username=username,
+		first_name=first_name,
+		last_name=last_name,
+		email=email,
+		password=password,
+		salt=salt,
+		birthday=birthday,
+		gender=gender,
+		created_in=datetime.now(),
+	)
+
+    db = app.extensions['sqlalchemy']
+    db.session.add(new_user)
+    db.session.commit()
 
 
 def get_user(_id: int):
@@ -70,8 +79,7 @@ def get_user(_id: int):
     Returns:
         (Users): The user object
     """
-    with app.app_context():
-        return Users.query.filter_by(id=_id).first()
+    return Users.query.filter_by(id=_id).first()
 
 
 def update_user(payload: dict):
@@ -81,15 +89,15 @@ def update_user(payload: dict):
     Parameters:
         payload (dict): Set of attributes and new values
     """
-    with app.app_context():
-        user = Users.query.filter_by(id = payload['id']).first()
+    user = Users.query.filter_by(id = payload['id']).first()
 
-        for k, v in payload.items():
-            if k == 'id':
-                continue
-            setattr(user, k, v)
+    for k, v in payload.items():
+        if k == 'id':
+            continue
+        setattr(user, k, v)
 
-        db.session.commit()
+    db = app.extensions['sqlalchemy']
+    db.session.commit()
 
 
 def get_salt(email: str) -> str:
@@ -102,8 +110,7 @@ def get_salt(email: str) -> str:
     Returns:
         (str): The salt used during registration
     """
-    with app.app_context():
-        return Users.query.filter_by(email=email).first().salt
+    return Users.query.filter_by(email=email).first().salt
 
 
 def login(email: str, password: str) -> Users:
@@ -117,8 +124,7 @@ def login(email: str, password: str) -> Users:
     Returns:
         (Users): The user object
     """
-    with app.app_context():
-        return Users.query.filter_by(email=email, password=password).first()
+    return Users.query.filter_by(email=email, password=password).first()
 
 
 def update_last_login(user: Users) -> None:
@@ -128,10 +134,11 @@ def update_last_login(user: Users) -> None:
     Parameters:
         user (Users): The user object
     """
-    with app.app_context():
-        db_user = Users.query.filter_by(id=user.id).first()
-        db_user.last_login = datetime.now()
-        db.session.commit()
+    db_user = Users.query.filter_by(id=user.id).first()
+    db_user.last_login = datetime.now()
+
+    db = app.extensions['sqlalchemy']
+    db.session.commit()
 
 
 def username_exists(username: str) -> bool:
@@ -144,8 +151,7 @@ def username_exists(username: str) -> bool:
     Returns:
         (bool): True if the username is being used, False otherwise
     """
-    with app.app_context():
-        return Users.query.filter_by(username=username).first() is not None
+    return Users.query.filter_by(username=username).first() is not None
 
 
 def store_session_token(id: int, token: str) -> None:
@@ -160,10 +166,11 @@ def store_session_token(id: int, token: str) -> None:
         token: str
             The session token
     """
-    with app.app_context():
-        st = SessionTokens(user_id = id, token = token)
-        db.session.add(st)
-        db.session.commit()
+    st = SessionTokens(user_id = id, token = token)
+
+    db = app.extensions['sqlalchemy']
+    db.session.add(st)
+    db.session.commit()
 
 
 def get_user_by_session_token(token: str) -> Union[int, None]:
@@ -180,6 +187,5 @@ def get_user_by_session_token(token: str) -> Union[int, None]:
         Union[int, None]
             The user's id if the token exists, otherwise None
     """
-    with app.app_context():
-        row = SessionTokens.query.filter_by(token = token).first()
-        return row.user_id if row else None
+    row = SessionTokens.query.filter_by(token = token).first()
+    return row.user_id if row else None

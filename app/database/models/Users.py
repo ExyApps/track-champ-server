@@ -1,5 +1,7 @@
-from extension import db
+from . import db
 from app.database.models.GenderEnum import GenderEnum
+
+from datetime import datetime, timezone
 
 class Users(db.Model):
     __tablename__ = 'acc_users'
@@ -16,7 +18,7 @@ class Users(db.Model):
     profile_image = db.Column(db.String(50), nullable=True)
     activated = db.Column(db.Boolean, nullable=False, default=False)
 
-    created_in = db.Column(db.DateTime, nullable=False)
+    created_in = db.Column(db.DateTime, default = datetime.now(timezone.utc))
     last_login = db.Column(db.DateTime, nullable=True)
 
     def __repr__(self):
@@ -40,7 +42,7 @@ class Users(db.Model):
             'profile_image': self.profile_image,
             'activated': self.activated,
             'created_in': self.created_in,
-            'last_login': self.last_login
+            'last_login': self.last_login,
         }
 
         for field in excuded_fields:

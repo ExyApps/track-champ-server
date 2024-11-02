@@ -2,8 +2,8 @@ from flask import request, jsonify, g
 from http import HTTPStatus
 
 from app.api.auth.utils.security import encrypt_password
-from app.database.wrapper import authentication
 from app.api.auth.utils.codes import generate_session_cookie
+from app.database.wrapper import authentication
 
 from . import auth_bp
 
@@ -12,8 +12,8 @@ def login():
     """
     Performs the login into the system
     """
-    if g.user_id:
-        return {'success': True, 'detail': 'Já tem uma sessão iniciada'}, HTTPStatus.TEMPORARY_REDIRECT
+    # if g.user_id:
+    #     return {'success': True, 'detail': 'Já tem uma sessão iniciada'}, HTTPStatus.TEMPORARY_REDIRECT
 
     payload = request.json
 
@@ -24,6 +24,9 @@ def login():
 
     salt = authentication.get_salt(payload['email'])
     password, _ = encrypt_password(payload['password'], salt)
+
+    print(payload)
+    print([x.to_json() for x in authentication.get_users()])
 
     user = authentication.login(payload['email'], password)
 
