@@ -12,8 +12,8 @@ def login():
     """
     Performs the login into the system
     """
-    # if g.user_id:
-    #     return {'success': True, 'detail': 'Já tem uma sessão iniciada'}, HTTPStatus.TEMPORARY_REDIRECT
+    if g.user_id:
+        return {'success': True, 'detail': 'Já tem uma sessão iniciada'}, HTTPStatus.TEMPORARY_REDIRECT
 
     payload = request.json
 
