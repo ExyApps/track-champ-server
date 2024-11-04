@@ -22,6 +22,7 @@ def generate_username(first_name: str, last_name: str) -> str:
 
     return username
 
+
 @auth_bp.route('/register', methods=['POST'])
 def register():
     """
