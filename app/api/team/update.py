@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, g
 from http import HTTPStatus
 
 from app.database.wrapper.teams import update_team
@@ -16,6 +16,9 @@ def update(id: int):
         id: int
             The team's id
     """
+    if not g.user_id:
+        return {'success': False, 'detail': 'Não tem uma sessão iniciada'}, HTTPStatus.TEMPORARY_REDIRECT
+    
     payload = request.json
     
     if not team_exists(id):

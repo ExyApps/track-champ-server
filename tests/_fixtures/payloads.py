@@ -25,3 +25,12 @@ def register_payload(date, email, first_name, gender, last_name, password):
         'gender': gender,
         'password': password
     }
+
+
+@pytest.fixture
+def team_payload(name, description, boolean_field):
+    return {
+        'name': name,
+        'description': description,
+        'public': boolean_field
+    }
