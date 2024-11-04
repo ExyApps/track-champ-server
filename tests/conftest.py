@@ -6,6 +6,7 @@ from config import TestConfig
 
 from _fixtures.input_fields import *
 from _fixtures.database_models import *
+from _fixtures.payloads import *
 
 # # --- Fixtures ---
 
@@ -24,7 +25,7 @@ def client(app):
     with app.test_client() as client:
         yield client
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='class')
 def db_session(app):
     with app.app_context():
         db.create_all()

@@ -1,13 +1,6 @@
 import pytest
 from datetime import datetime
 
-from _fixtures.input_fields import username
-from _fixtures.input_fields import first_name
-from _fixtures.input_fields import last_name
-from _fixtures.input_fields import email
-from _fixtures.input_fields import date
-from _fixtures.input_fields import password
-
 from app.database.models.Users import Users
 from app.database.models.GenderEnum import GenderEnum
 
