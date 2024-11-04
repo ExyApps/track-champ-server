@@ -1,6 +1,6 @@
 from typing import List
 
-from extension import app, db
+from flask import current_app as app
 
 from app.database.models.Teams import Teams
 from app.database.models.TeamUsers import TeamUsers
@@ -24,18 +24,18 @@ def create_team(name: str, description: str, public: bool, profile_image: str) -
         profile_image: str
             The team's profile image
     """
-    with app.app_context():
-        team = Teams(
-            name = name,
-            description = description,
-            public = public,
-            profile_image = profile_image
-        )
+    team = Teams(
+        name = name,
+        description = description,
+        public = public,
+        profile_image = profile_image
+    )
 
-        db.session.add(team)
-        db.session.commit()
-        db.session.refresh(team)
-        return team
+    db = app.extensions['sqlalchemy']
+    db.session.add(team)
+    db.session.commit()
+    db.session.refresh(team)
+    return team
 
 
 def delete_team(id: int) -> None:
@@ -45,10 +45,11 @@ def delete_team(id: int) -> None:
     Parameters:
         id (int): The team's id
     """
-    with app.app_context():
-        team = Teams.query.get(id)
-        db.session.delete(team)
-        db.session.commit()
+    team = Teams.query.get(id)
+
+    db = app.extensions['sqlalchemy']
+    db.session.delete(team)
+    db.session.commit()
 
 
 def update_team(id: int, name: int, description: int, public: bool, profile_image: str) -> Teams:
@@ -62,16 +63,16 @@ def update_team(id: int, name: int, description: int, public: bool, profile_imag
         public (bool): If the team is acessible to everyone or not
         profile_image (str): The team's profile image
     """
-    with app.app_context():
-        team = Teams.query.get(id)
-        team.name = name
-        team.description = description
-        team.public = public
-        team.profile_image = profile_image
+    team = Teams.query.get(id)
+    team.name = name
+    team.description = description
+    team.public = public
+    team.profile_image = profile_image
 
-        db.session.commit()
-        db.session.refresh(team)
-        return team
+    db = app.extensions['sqlalchemy']
+    db.session.commit()
+    db.session.refresh(team)
+    return team
 
 
 def get_public_teams(search: str = '', offset: int = 0, limit: int = 10) -> List[Teams]:
@@ -86,17 +87,16 @@ def get_public_teams(search: str = '', offset: int = 0, limit: int = 10) -> List
     Returns:
         (List[Teams]): A list of teams that match the criteria
     """
-    with app.app_context():
-        teams = (
-            Teams.query.filter(
-                (Teams.public & (Teams.name.ilike(f'%{search}%') | Teams.description.ilike(f'%{search}%')))
-            )
-            .order_by(Teams.name)
-            .offset(offset)
-            .limit(limit)
-            .all()
+    teams = (
+        Teams.query.filter(
+            (Teams.public & (Teams.name.ilike(f'%{search}%') | Teams.description.ilike(f'%{search}%')))
         )
-        return teams
+        .order_by(Teams.name)
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
+    return teams
     
 
 def team_exists(id: int) -> bool:
@@ -113,8 +113,7 @@ def team_exists(id: int) -> bool:
         bool
             True if the team exists, False otherwise
     """
-    with app.app_context():
-        return Teams.query.get(id) is not None
+    return Teams.query.get(id) is not None
     
 
 def get_team_users(id: int) -> List[int]:
@@ -131,9 +130,8 @@ def get_team_users(id: int) -> List[int]:
         List[int]
             A list of all the users' ids
     """
-    with app.app_context():
-        ids = [tu.user_id for tu in TeamUsers.query.filter_by(team_id=id).all()]
-        return ids
+    ids = [tu.user_id for tu in TeamUsers.query.filter_by(team_id=id).all()]
+    return ids
     
 
 def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False) -> None:
@@ -157,6 +155,7 @@ def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False) -> None
         is_admin = is_admin
     )
 
+    db = app.extensions['sqlalchemy']
     db.session.add(tu)
     db.session.commit()
 
@@ -172,6 +171,7 @@ def delete_team_users(id: int) -> None:
     """
     rows = TeamUsers.query.filter_by(team_id = id).all()
 
+    db = app.extensions['sqlalchemy']
     for row in rows:
         db.session.delete(row)
     db.session.commit()

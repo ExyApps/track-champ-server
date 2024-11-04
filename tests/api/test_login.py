@@ -1,13 +1,10 @@
 class TestLoginEndpoint:
 	url = '/auth/login'
 
-	def test_login_account_does_not_exist(self, client):
+	def test_login_account_does_not_exist(self, client, login_payload):
 		response = client.post(
 			self.url,
-			json={
-				'email': 'test@email.com',
-				'password': 'test',
-			}
+			json=login_payload
 		)
 
 		assert response.status_code == 401
