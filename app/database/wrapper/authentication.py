@@ -7,14 +7,21 @@ from app.database.models.Users import Users
 from app.database.models.GenderEnum import GenderEnum
 from app.database.models.SessionTokens import SessionTokens
 
-def get_users() -> int:
-	"""
-	Get the number of users in the database
+def get_account_by_email(email: str) -> Optional[Users]:
+    """
+    Get an account by its email if it exists
 
-	Returns:
-		(int): The number of users
-	"""
-	return Users.query.all()
+    Parameters
+    ----------
+        email: str
+            The user's email
+
+    Returns
+    -------
+        Optional[Users]: The user information
+    """
+    return Users.query.filter_by(email=email).first()
+
 
 def account_exists(email: str) -> bool:
     """
@@ -35,7 +42,6 @@ def create_new_user(
     last_name: str,
     email: str,
     password: str,
-    salt: str,
     birthday: str,
     gender: GenderEnum
 ):
@@ -48,7 +54,6 @@ def create_new_user(
         last_name (str): The user's last name
         email (str): The user's email
         password (str): The user's password encrypted
-        salt (str): The salt associated to the user's password
         birthday (str): The user's birthday
         gender (GenderEnum): The user's gender
     """
@@ -58,7 +63,6 @@ def create_new_user(
 		last_name=last_name,
 		email=email,
 		password=password,
-		salt=salt,
 		birthday=birthday,
 		gender=gender,
 		created_in=datetime.now(),

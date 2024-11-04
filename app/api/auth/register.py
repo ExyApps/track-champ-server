@@ -1,13 +1,13 @@
-import re
 from datetime import datetime
 from flask import request, jsonify, g
 from http import HTTPStatus
 
-from app.api.auth.utils.security import encrypt_password
 from app.api.auth.utils.codes import generate_digit_code
 
 from app.database.models.GenderEnum import match_gender
 from app.database.wrapper import authentication
+
+from werkzeug.security import generate_password_hash
 
 from . import auth_bp
 
@@ -32,10 +32,10 @@ def register():
 
     payload = request.json
 
-    password, salt = encrypt_password(payload['password'])
-
     if (authentication.account_exists(payload['email'])):
         return jsonify({ 'error': 'Este email já tem uma conta associada.', 'field': 'email' }), HTTPStatus.CONFLICT
+    
+    password = generate_password_hash(payload['password'])
 
     authentication.create_new_user(
         username=generate_username(payload['first_name'], payload['last_name']),
@@ -43,7 +43,6 @@ def register():
         last_name=payload['last_name'].strip(),
         email=payload['email'].strip(),
         password=password,
-        salt=salt,
         birthday=datetime.strptime(payload['date'], '%Y-%M-%d').date(),
         gender=match_gender(payload['gender'])
     )

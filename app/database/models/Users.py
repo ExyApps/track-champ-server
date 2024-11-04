@@ -12,7 +12,7 @@ class Users(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(64), nullable=False)
-    salt = db.Column(db.String(30), nullable=False)
+    # salt = db.Column(db.String(30), nullable=False)
     birthday = db.Column(db.Date, nullable=False)
     gender = db.Column(db.Enum(GenderEnum), nullable=False)
     profile_image = db.Column(db.String(50), nullable=True)

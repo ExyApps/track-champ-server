@@ -1,9 +1,10 @@
 from flask import request, jsonify, g
 from http import HTTPStatus
 
-from app.api.auth.utils.security import encrypt_password
 from app.api.auth.utils.codes import generate_session_cookie
 from app.database.wrapper import authentication
+
+from werkzeug.security import check_password_hash
 
 from . import auth_bp
 
@@ -17,20 +18,12 @@ def login():
 
     payload = request.json
 
-    account_exists = authentication.account_exists(payload['email'])
+    user = authentication.get_account_by_email(payload['email'])
 
-    if not account_exists:
+    if not user:
         return jsonify({ 'error': 'Essa combinação de email/password não existe', 'field': 'email' }), HTTPStatus.UNAUTHORIZED
 
-    salt = authentication.get_salt(payload['email'])
-    password, _ = encrypt_password(payload['password'], salt)
-
-    print(payload)
-    print([x.to_json() for x in authentication.get_users()])
-
-    user = authentication.login(payload['email'], password)
-
-    if user is None:
+    if not check_password_hash(user.password, payload['password']):
         return jsonify({ 'error': 'Essa combinação de email/password não existe', 'field': 'email' }), HTTPStatus.UNAUTHORIZED
 
     session_token = generate_session_cookie()
