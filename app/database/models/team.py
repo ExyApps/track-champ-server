@@ -2,8 +2,8 @@ from . import db
 
 from datetime import datetime, timezone
 
-class Teams(db.Model):
-    __tablename__ = 'acc_teams'
+class Team(db.Model):
+    __tablename__ = 'acc_team'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
@@ -18,7 +18,7 @@ class Teams(db.Model):
         return f'<Team {self.id} - {self.name} - {self.public}>'
     
 
-    def to_json(self, excuded_fields = []):
+    def to_json(self, excluded_fields = []):
         """
         Transform the class information to a dictionary, and remove unwanted fields
 
@@ -34,7 +34,7 @@ class Teams(db.Model):
             'created_in': self.created_in,
         }
 
-        for field in excuded_fields:
+        for field in excluded_fields:
             if field in info:
                 del info[field]
 

@@ -3,11 +3,11 @@ from datetime import datetime
 
 from flask import current_app as app
 
-from app.database.models.Users import Users
-from app.database.models.GenderEnum import GenderEnum
-from app.database.models.SessionTokens import SessionTokens
+from app.database.models.user import User
+from app.database.enums.GenderEnum import GenderEnum
+from app.database.models.session_token import SessionToken
 
-def get_account_by_email(email: str) -> Optional[Users]:
+def get_account_by_email(email: str) -> Optional[User]:
     """
     Get an account by its email if it exists
 
@@ -18,9 +18,9 @@ def get_account_by_email(email: str) -> Optional[Users]:
 
     Returns
     -------
-        Optional[Users]: The user information
+        Optional[User]: The user information
     """
-    return Users.query.filter_by(email=email).first()
+    return User.query.filter_by(email=email).first()
 
 
 def account_exists(email: str) -> bool:
@@ -33,7 +33,7 @@ def account_exists(email: str) -> bool:
     Returns:
         (bool): True if the email is being used, and False otherwise
     """
-    return Users.query.filter_by(email=email).first() is not None
+    return User.query.filter_by(email=email).first() is not None
 
 
 def create_new_user(
@@ -57,7 +57,7 @@ def create_new_user(
         birthday (str): The user's birthday
         gender (GenderEnum): The user's gender
     """
-    new_user = Users(
+    new_user = User(
 		username=username,
 		first_name=first_name,
 		last_name=last_name,
@@ -81,9 +81,9 @@ def get_user(_id: int):
         _id (int): The id of the user
 
     Returns:
-        (Users): The user object
+        (User): The user object
     """
-    return Users.query.filter_by(id=_id).first()
+    return User.query.filter_by(id=_id).first()
 
 
 def update_user(payload: dict):
@@ -93,7 +93,7 @@ def update_user(payload: dict):
     Parameters:
         payload (dict): Set of attributes and new values
     """
-    user = Users.query.filter_by(id = payload['id']).first()
+    user = User.query.filter_by(id = payload['id']).first()
 
     for k, v in payload.items():
         if k == 'id':
@@ -114,10 +114,10 @@ def get_salt(email: str) -> str:
     Returns:
         (str): The salt used during registration
     """
-    return Users.query.filter_by(email=email).first().salt
+    return User.query.filter_by(email=email).first().salt
 
 
-def login(email: str, password: str) -> Users:
+def login(email: str, password: str) -> User:
     """
     Check if there is an account with these details
 
@@ -126,19 +126,19 @@ def login(email: str, password: str) -> Users:
         password (str): The user's password
 
     Returns:
-        (Users): The user object
+        (User): The user object
     """
-    return Users.query.filter_by(email=email, password=password).first()
+    return User.query.filter_by(email=email, password=password).first()
 
 
-def update_last_login(user: Users) -> None:
+def update_last_login(user: User) -> None:
     """
     Update the last date the user logged in
 
     Parameters:
-        user (Users): The user object
+        user (User): The user object
     """
-    db_user = Users.query.filter_by(id=user.id).first()
+    db_user = User.query.filter_by(id=user.id).first()
     db_user.last_login = datetime.now()
 
     db = app.extensions['sqlalchemy']
@@ -155,7 +155,7 @@ def username_exists(username: str) -> bool:
     Returns:
         (bool): True if the username is being used, False otherwise
     """
-    return Users.query.filter_by(username=username).first() is not None
+    return User.query.filter_by(username=username).first() is not None
 
 
 def store_session_token(id: int, token: str) -> None:
@@ -170,7 +170,7 @@ def store_session_token(id: int, token: str) -> None:
         token: str
             The session token
     """
-    st = SessionTokens(user_id = id, token = token)
+    st = SessionToken(user_id = id, token = token)
 
     db = app.extensions['sqlalchemy']
     db.session.add(st)
@@ -191,5 +191,5 @@ def get_user_by_session_token(token: str) -> Union[int, None]:
         Union[int, None]
             The user's id if the token exists, otherwise None
     """
-    row = SessionTokens.query.filter_by(token = token).first()
+    row = SessionToken.query.filter_by(token = token).first()
     return row.user_id if row else None

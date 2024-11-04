@@ -4,7 +4,7 @@ from http import HTTPStatus
 
 from app.api.auth.utils.codes import generate_digit_code
 
-from app.database.models.GenderEnum import match_gender
+from app.database.enums.GenderEnum import match_gender
 from app.database.wrapper import authentication
 
 from werkzeug.security import generate_password_hash

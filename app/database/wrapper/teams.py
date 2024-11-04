@@ -2,11 +2,11 @@ from typing import List
 
 from flask import current_app as app
 
-from app.database.models.Teams import Teams
-from app.database.models.TeamUsers import TeamUsers
+from app.database.models.team import Team
+from app.database.models.team_user import TeamUser
 
 
-def create_team(name: str, description: str, public: bool, profile_image: str) -> Teams:
+def create_team(name: str, description: str, public: bool, profile_image: str) -> Team:
     """
     Create a new team and insert it into the database
 
@@ -24,7 +24,7 @@ def create_team(name: str, description: str, public: bool, profile_image: str) -
         profile_image: str
             The team's profile image
     """
-    team = Teams(
+    team = Team(
         name = name,
         description = description,
         public = public,
@@ -45,14 +45,14 @@ def delete_team(id: int) -> None:
     Parameters:
         id (int): The team's id
     """
-    team = Teams.query.get(id)
+    team = Team.query.get(id)
 
     db = app.extensions['sqlalchemy']
     db.session.delete(team)
     db.session.commit()
 
 
-def update_team(id: int, name: int, description: int, public: bool, profile_image: str) -> Teams:
+def update_team(id: int, name: int, description: int, public: bool, profile_image: str) -> Team:
     """
     Updates the team details
 
@@ -63,7 +63,7 @@ def update_team(id: int, name: int, description: int, public: bool, profile_imag
         public (bool): If the team is acessible to everyone or not
         profile_image (str): The team's profile image
     """
-    team = Teams.query.get(id)
+    team = Team.query.get(id)
     team.name = name
     team.description = description
     team.public = public
@@ -75,7 +75,7 @@ def update_team(id: int, name: int, description: int, public: bool, profile_imag
     return team
 
 
-def get_public_teams(search: str = '', offset: int = 0, limit: int = 10) -> List[Teams]:
+def get_public_teams(search: str = '', offset: int = 0, limit: int = 10) -> List[Team]:
     """
     Retrieve a list of public teams
 
@@ -85,13 +85,13 @@ def get_public_teams(search: str = '', offset: int = 0, limit: int = 10) -> List
         limit (int): The number of results to be returned
 
     Returns:
-        (List[Teams]): A list of teams that match the criteria
+        (List[Team]): A list of teams that match the criteria
     """
     teams = (
-        Teams.query.filter(
-            (Teams.public & (Teams.name.ilike(f'%{search}%') | Teams.description.ilike(f'%{search}%')))
+        Team.query.filter(
+            (Team.public & (Team.name.ilike(f'%{search}%') | Team.description.ilike(f'%{search}%')))
         )
-        .order_by(Teams.name)
+        .order_by(Team.name)
         .offset(offset)
         .limit(limit)
         .all()
@@ -113,7 +113,7 @@ def team_exists(id: int) -> bool:
         bool
             True if the team exists, False otherwise
     """
-    return Teams.query.get(id) is not None
+    return Team.query.get(id) is not None
     
 
 def get_team_users(id: int) -> List[int]:
@@ -130,7 +130,7 @@ def get_team_users(id: int) -> List[int]:
         List[int]
             A list of all the users' ids
     """
-    ids = [tu.user_id for tu in TeamUsers.query.filter_by(team_id=id).all()]
+    ids = [tu.user_id for tu in TeamUser.query.filter_by(team_id=id).all()]
     return ids
     
 
@@ -149,7 +149,7 @@ def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False) -> None
         is_admin: bool
             If the user should be an admin or not
     """
-    tu = TeamUsers(
+    tu = TeamUser(
         user_id = user_id,
         team_id = team_id,
         is_admin = is_admin
@@ -169,7 +169,7 @@ def delete_team_users(id: int) -> None:
         id: int
             The team's id
     """
-    rows = TeamUsers.query.filter_by(team_id = id).all()
+    rows = TeamUser.query.filter_by(team_id = id).all()
 
     db = app.extensions['sqlalchemy']
     for row in rows:

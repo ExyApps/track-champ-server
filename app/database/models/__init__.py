@@ -1,8 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
-from . import GenderEnum
-from . import SessionTokens
-from . import Teams
-from . import TeamUsers
-from . import Users
+from . import session_token
+from . import team
+from . import team_user
+from . import user
+from . import body_test

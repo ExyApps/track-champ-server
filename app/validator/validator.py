@@ -2,7 +2,7 @@ import re
 import datetime
 from typing import *
 
-from app.database.models.GenderEnum import GenderEnum
+from app.database.enums.GenderEnum import GenderEnum
 
 IGNORED_FIELDS = ['id', 'profile_image']
 

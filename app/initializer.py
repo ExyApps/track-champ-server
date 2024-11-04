@@ -10,6 +10,7 @@ from app.endpoint_wrappers.logging import setup_logs
 from app.api.auth import auth_bp
 from app.api.profile import profile_bp
 from app.api.team import team_bp
+from app.api.test import test_bp
 
 NEEDED_PATHS = [
     'files',
@@ -33,6 +34,7 @@ def create_app(config_class=Config): # Function to create the app with a configu
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(profile_bp, url_prefix='/profile')
     app.register_blueprint(team_bp, url_prefix='/team')
+    app.register_blueprint(test_bp, url_prefix='/test')
 
     setup_context(app)
     setup_logs(app)

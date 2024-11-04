@@ -5,7 +5,7 @@ from http import HTTPStatus
 
 from app.database.wrapper import authentication
 
-from app.database.models.GenderEnum import match_gender
+from app.database.enums.GenderEnum import match_gender
 
 @profile_bp.route('/update', methods=['POST'])
 def update():

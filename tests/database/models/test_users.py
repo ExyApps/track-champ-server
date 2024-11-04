@@ -1,9 +1,9 @@
 import datetime
 
-from app.database.models.Users import Users
+from app.database.models.user import User
 
-class TestUsers:
-    def test_representation(self, user: Users):
+class TestUser:
+    def test_representation(self, user: User):
         """
         Check if the the representation is correct
         """
@@ -12,7 +12,7 @@ class TestUsers:
         assert isinstance(representation, str)
         assert representation.startswith('<User ')
 
-    def test_conversion(self, user: Users):
+    def test_conversion(self, user: User):
         """
         Check if the conversion is correct
         """
