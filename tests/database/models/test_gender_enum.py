@@ -1,7 +1,7 @@
 import pytest
 
-from app.database.enums.GenderEnum import GenderEnum
-from app.database.enums.GenderEnum import match_gender
+from src.database.enums.GenderEnum import GenderEnum
+from src.database.enums.GenderEnum import match_gender
 
 class TestGenderEmail:
     def test_get_male_gender(self):

@@ -2,16 +2,16 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from config import Config
-from app.database.models import *
+from src.database.models import *
 
-from app.endpoint_wrappers.context import setup_body_verification
-from app.endpoint_wrappers.context import setup_context
-from app.endpoint_wrappers.logging import setup_logs
+from src.endpoint_wrappers.context import setup_body_verification
+from src.endpoint_wrappers.context import setup_context
+from src.endpoint_wrappers.logging import setup_logs
 
-from app.api.auth import auth_bp
-from app.api.profile import profile_bp
-from app.api.team import team_bp
-from app.api.test import test_bp
+from src.api.auth import auth_bp
+from src.api.profile import profile_bp
+from src.api.team import team_bp
+from src.api.test import test_bp
 
 NEEDED_PATHS = [
     'files',

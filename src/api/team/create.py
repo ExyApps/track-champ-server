@@ -1,8 +1,8 @@
 from flask import request, jsonify, g
 from http import HTTPStatus
 
-from app.database.wrapper.teams import create_team
-from app.database.wrapper.teams import add_user_to_team
+from src.database.wrapper.teams import create_team
+from src.database.wrapper.teams import add_user_to_team
 
 from . import team_bp
 

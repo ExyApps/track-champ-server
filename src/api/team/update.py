@@ -1,8 +1,8 @@
 from flask import request, jsonify, g
 from http import HTTPStatus
 
-from app.database.wrapper.teams import update_team
-from app.database.wrapper.teams import team_exists
+from src.database.wrapper.teams import update_team
+from src.database.wrapper.teams import team_exists
 
 from . import team_bp
 

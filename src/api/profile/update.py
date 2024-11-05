@@ -3,9 +3,9 @@ import base64, os
 from flask import request, jsonify, g
 from http import HTTPStatus
 
-from app.database.wrapper import authentication
+from src.database.wrapper import authentication
 
-from app.database.enums.GenderEnum import match_gender
+from src.database.enums.GenderEnum import match_gender
 
 @profile_bp.route('/update', methods=['POST'])
 def update():

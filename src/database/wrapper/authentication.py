@@ -3,9 +3,9 @@ from datetime import datetime
 
 from flask import current_app as app
 
-from app.database.models.user import User
-from app.database.enums.GenderEnum import GenderEnum
-from app.database.models.session_token import SessionToken
+from src.database.models.user import User
+from src.database.enums.GenderEnum import GenderEnum
+from src.database.models.session_token import SessionToken
 
 def get_account_by_email(email: str) -> Optional[User]:
     """

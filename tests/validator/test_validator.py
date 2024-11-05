@@ -1,4 +1,4 @@
-from app.validator.validator import Validator
+from src.validator.validator import Validator
 
 class TestValidator:
     def test_validate_normal_string(self, first_name: str):

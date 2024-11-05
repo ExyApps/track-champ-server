@@ -2,8 +2,8 @@ from typing import List
 
 from flask import current_app as app
 
-from app.database.models.team import Team
-from app.database.models.team_user import TeamUser
+from src.database.models.team import Team
+from src.database.models.team_user import TeamUser
 
 
 def create_team(name: str, description: str, public: bool, profile_image: str) -> Team:

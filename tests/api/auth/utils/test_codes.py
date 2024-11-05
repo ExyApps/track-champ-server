@@ -1,5 +1,5 @@
-from app.api.auth.utils.codes import generate_digit_code
-from app.api.auth.utils.codes import generate_session_cookie
+from src.api.auth.utils.codes import generate_digit_code
+from src.api.auth.utils.codes import generate_session_cookie
 
 class TestGenerateDigitCode:
     # Common Verifications

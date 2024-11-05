@@ -1,7 +1,7 @@
 import pytest
 
-from app.initializer import create_app
-from app.database.models import db
+from src.initializer import create_app
+from src.database.models import db
 from config import TestConfig
 
 from _fixtures.input_fields import *

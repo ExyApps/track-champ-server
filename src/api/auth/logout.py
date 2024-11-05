@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import request, jsonify, g, make_response
 from http import HTTPStatus
 
-from app.database.wrapper import authentication
+from src.database.wrapper import authentication
 
 from . import auth_bp
 

@@ -2,10 +2,10 @@ import pytest
 from datetime import datetime
 from werkzeug.security import generate_password_hash
 
-from app.database.models.user import User
-from app.database.enums.GenderEnum import GenderEnum
-from app.database.models.team import Team
-from app.database.models.team_user import TeamUser
+from src.database.models.user import User
+from src.database.enums.GenderEnum import GenderEnum
+from src.database.models.team import Team
+from src.database.models.team_user import TeamUser
 
 @pytest.fixture()
 def user(username, first_name, last_name, email, date, password):

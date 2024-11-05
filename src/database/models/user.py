@@ -1,5 +1,5 @@
 from . import db
-from app.database.enums.GenderEnum import GenderEnum
+from src.database.enums.GenderEnum import GenderEnum
 
 from datetime import datetime, timezone
 

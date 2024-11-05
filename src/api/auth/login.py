@@ -2,8 +2,8 @@ from datetime import datetime
 from flask import request, jsonify, g, make_response
 from http import HTTPStatus
 
-from app.api.auth.utils.codes import generate_session_cookie
-from app.database.wrapper import authentication
+from src.api.auth.utils.codes import generate_session_cookie
+from src.database.wrapper import authentication
 
 from werkzeug.security import check_password_hash
 

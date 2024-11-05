@@ -2,10 +2,10 @@ from datetime import datetime
 from flask import request, jsonify, g
 from http import HTTPStatus
 
-from app.api.auth.utils.codes import generate_digit_code
+from src.api.auth.utils.codes import generate_digit_code
 
-from app.database.enums.GenderEnum import match_gender
-from app.database.wrapper import authentication
+from src.database.enums.GenderEnum import match_gender
+from src.database.wrapper import authentication
 
 from werkzeug.security import generate_password_hash
 

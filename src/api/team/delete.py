@@ -1,9 +1,9 @@
 from flask import jsonify, g
 from http import HTTPStatus
 
-from app.database.wrapper.teams import delete_team
-from app.database.wrapper.teams import delete_team_users
-from app.database.wrapper.teams import team_exists
+from src.database.wrapper.teams import delete_team
+from src.database.wrapper.teams import delete_team_users
+from src.database.wrapper.teams import team_exists
 
 from . import team_bp
 

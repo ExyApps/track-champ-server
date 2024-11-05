@@ -1,6 +1,6 @@
 import datetime
 
-from app.database.models.user import User
+from src.database.models.user import User
 
 class TestUser:
     def test_representation(self, user: User):

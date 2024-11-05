@@ -4,7 +4,7 @@ from http import HTTPStatus
 
 from config import Config, TestConfig
 
-from app.initializer import create_app
+from src.initializer import create_app
 
 if __name__ == "__main__":
     if os.environ.get('FLASK_ENV') == 'development':

@@ -1,8 +1,8 @@
 from flask import Flask, request, g
 from http import HTTPStatus
 
-from app.database.wrapper.authentication import get_user_by_session_token
-from app.validator.validator import Validator
+from src.database.wrapper.authentication import get_user_by_session_token
+from src.validator.validator import Validator
 
 def setup_context(app: Flask) -> None:
     """
