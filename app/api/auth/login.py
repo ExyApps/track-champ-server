@@ -1,4 +1,5 @@
-from flask import request, jsonify, g
+from datetime import datetime
+from flask import request, jsonify, g, make_response
 from http import HTTPStatus
 
 from app.api.auth.utils.codes import generate_session_cookie
@@ -27,14 +28,23 @@ def login():
         return jsonify({ 'error': 'Essa combinação de email/password não existe', 'field': 'email' }), HTTPStatus.UNAUTHORIZED
 
     session_token = generate_session_cookie()
+    print(session_token)
     authentication.store_session_token(user.id, session_token)
 
     info = user.to_json()
 
-    response = jsonify({
+    response = make_response({
         'success': True,
         'info': info
     })
-    response.set_cookie('session_token', session_token)
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000' # or your React app's origin
+    response.headers['Access-Control-Allow-Credentials'] = 'true' # crucial for cookies
+    response.set_cookie(
+        'session_token',
+        session_token,
+        expires=datetime.fromisocalendar(2026, 2, 1),
+        httponly=True,
+        samesite='Lax'
+    )
 
     return response, HTTPStatus.OK

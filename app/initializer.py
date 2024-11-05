@@ -20,7 +20,11 @@ NEEDED_PATHS = [
 
 def create_app(config_class=Config): # Function to create the app with a configurable config class
     app = Flask(__name__)
-    CORS(app)
+    CORS(
+        app,
+        origins='http://localhost:3000',
+        supports_credentials=True
+    )
     app.config.from_object(config_class)
 
     if not config_class.TESTING:

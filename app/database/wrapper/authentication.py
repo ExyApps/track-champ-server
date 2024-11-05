@@ -86,18 +86,17 @@ def get_user(_id: int):
     return User.query.filter_by(id=_id).first()
 
 
-def update_user(payload: dict):
+def update_user(id: int, payload: dict):
     """
     Update the user's information
 
     Parameters:
+        id (int): The user's id
         payload (dict): Set of attributes and new values
     """
-    user = User.query.filter_by(id = payload['id']).first()
+    user = User.query.filter_by(id = id).first()
 
     for k, v in payload.items():
-        if k == 'id':
-            continue
         setattr(user, k, v)
 
     db = app.extensions['sqlalchemy']
