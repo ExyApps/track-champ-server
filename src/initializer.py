@@ -22,7 +22,7 @@ def create_app(config_class=Config): # Function to create the app with a configu
     app = Flask(__name__)
     CORS(
         app,
-        origins='http://localhost:3000',
+        origins='*',
         supports_credentials=True
     )
     app.config.from_object(config_class)
