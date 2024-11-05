@@ -27,6 +27,7 @@ def setup_context(app: Flask) -> None:
             # Identify the user
             g.user_id = get_user_by_session_token(session_token)
 
+
 def setup_body_verification(app: Flask) -> None:
     """
     Setup the endpoint's body validation 

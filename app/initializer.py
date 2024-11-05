@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_cors import CORS
 from config import Config
 from app.database.models import *
 
@@ -19,6 +20,7 @@ NEEDED_PATHS = [
 
 def create_app(config_class=Config): # Function to create the app with a configurable config class
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(config_class)
 
     if not config_class.TESTING:
@@ -38,6 +40,6 @@ def create_app(config_class=Config): # Function to create the app with a configu
 
     setup_context(app)
     setup_logs(app)
-    # setup_body_verification(app)
+    setup_body_verification(app)
 
     return app
