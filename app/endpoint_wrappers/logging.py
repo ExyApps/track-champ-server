@@ -1,8 +1,8 @@
 import logging
 import uuid
-from flask import Flask, request
+from flask import Flask, request, g
 
-def setup_login(app: Flask) -> None:
+def setup_logs(app: Flask) -> None:
     """
     Setup the logging of the app
 
@@ -27,6 +27,8 @@ def setup_login(app: Flask) -> None:
             Args: {request.args}
             Form: {request.form}
             JSON: {request.json if request.is_json else 'Not applicable'}
+            User ID: {g.user_id}
+            User ST: {g.session_token}
             Headers: {request.headers}"""
         )
 

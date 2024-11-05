@@ -1,7 +1,6 @@
 Flask
 Flask-Cors
 Flask-SQLAlchemy
-bcrypt
 python-dotenv
 pytest
 pytest-cov
