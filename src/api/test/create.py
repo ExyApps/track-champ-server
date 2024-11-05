@@ -1,8 +1,6 @@
 from flask import request, jsonify, g
 from http import HTTPStatus
 
-from src.database.models.tests import *
-
 from src.database.enums.TestEnum import match_test
 
 from . import test_bp
