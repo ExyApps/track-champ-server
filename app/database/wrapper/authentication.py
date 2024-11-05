@@ -176,6 +176,25 @@ def store_session_token(id: int, token: str) -> None:
     db.session.commit()
 
 
+def delete_session_token(id: int, token: str) -> None:
+    """
+    Delete a session token
+
+    Parameters
+    ----------
+        id: int
+            The user's id
+
+        token: str
+            The session token
+    """
+    st = SessionToken.query.filter_by(user_id=id, token=token).first()
+
+    db = app.extensions['sqlalchemy']
+    db.session.delete(st)
+    db.session.commit()
+
+
 def get_user_by_session_token(token: str) -> Union[int, None]:
     """
     Get the user's id using the session token provided
