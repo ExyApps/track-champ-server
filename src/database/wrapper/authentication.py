@@ -99,7 +99,7 @@ def update_user(id: int, payload: dict):
     for k, v in payload.items():
         setattr(user, k, v)
 
-    user.birthday = payload.date
+    user.birthday = datetime.strptime(payload['date'], '%Y-%m-%d')
 
     db = app.extensions['sqlalchemy']
     db.session.commit()

@@ -44,7 +44,7 @@ def register():
         last_name=payload['last_name'].strip(),
         email=payload['email'].strip(),
         password=password,
-        birthday=datetime.strptime(payload['date'], '%Y-%M-%d').date(),
+        birthday=datetime.strptime(payload['date'], '%Y-%m-%d').date(),
         gender=match_gender(payload['gender'])
     )
 
