@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from flask import current_app as app
 
@@ -75,7 +75,23 @@ def update_team(id: int, name: int, description: int, public: bool, profile_imag
     return team
 
 
-def get_public_teams(search: str = '', offset: int = 0, limit: int = 10) -> List[Team]:
+def get_user_teams(id: int) -> List[Team]:
+    """
+    Retrieve a list of teams that the user is in
+
+    Parameters
+    ----------
+        id: int
+            The user's id
+    """
+    teams = Team.query.select_from(
+        TeamUser.query.join(Team, TeamUser.team_id == Team.id)
+    ).filter(TeamUser.user_id == id).all()
+
+    return teams
+
+
+def get_public_teams(search: str = '', offset: int = 0, limit: int = 10, ignore_ids = []) -> List[Team]:
     """
     Retrieve a list of public teams
 
@@ -89,7 +105,13 @@ def get_public_teams(search: str = '', offset: int = 0, limit: int = 10) -> List
     """
     teams = (
         Team.query.filter(
-            (Team.public & (Team.name.ilike(f'%{search}%') | Team.description.ilike(f'%{search}%')))
+            (
+                Team.public & (
+                    Team.name.ilike(f'%{search}%') | Team.description.ilike(f'%{search}%')
+                ) & (
+                    ~Team.id.in_(ignore_ids)
+                )
+            )
         )
         .order_by(Team.name)
         .offset(offset)
@@ -99,9 +121,9 @@ def get_public_teams(search: str = '', offset: int = 0, limit: int = 10) -> List
     return teams
     
 
-def team_exists(id: int) -> bool:
+def get_team_by_id(id: int) -> Optional[Team]:
     """
-    Check if a team exists
+    Get a team by its id
 
     Parameters
     ----------
@@ -110,11 +132,28 @@ def team_exists(id: int) -> bool:
 
     Returns
     -------
-        bool
-            True if the team exists, False otherwise
+        Optional[Team]
+            The team object
     """
-    return Team.query.get(id) is not None
-    
+    return Team.query.get(id)
+
+
+def get_team_member_count(id: int) -> int:
+    """
+    Get the team member count
+
+    Parameters
+    ----------
+        id: int
+            The team's id
+
+    Returns
+    -------
+        int
+            The number of members in the group
+    """
+    return TeamUser.query.filter_by(team_id=id).count()
+
 
 def get_team_users(id: int) -> List[int]:
     """

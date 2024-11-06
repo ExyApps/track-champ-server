@@ -3,7 +3,7 @@ from http import HTTPStatus
 
 from src.database.wrapper.teams import delete_team
 from src.database.wrapper.teams import delete_team_users
-from src.database.wrapper.teams import team_exists
+from src.database.wrapper.teams import get_team_by_id
 
 from . import team_bp
 
@@ -20,7 +20,7 @@ def delete(id: int):
     if not g.user_id:
         return {'success': False, 'detail': 'Não tem uma sessão iniciada'}, HTTPStatus.TEMPORARY_REDIRECT
     
-    if not team_exists(id):
+    if not get_team_by_id(id):
         return jsonify({'success': False, 'detail': 'A equipa não existe.'}), HTTPStatus.NOT_FOUND
 
     delete_team(id)

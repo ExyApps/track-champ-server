@@ -2,7 +2,7 @@ from flask import request, jsonify, g
 from http import HTTPStatus
 
 from src.database.wrapper.teams import update_team
-from src.database.wrapper.teams import team_exists
+from src.database.wrapper.teams import get_team_by_id
 
 from . import team_bp
 
@@ -21,7 +21,7 @@ def update(id: int):
     
     payload = request.json
     
-    if not team_exists(id):
+    if not get_team_by_id(id):
         return jsonify({'success': False, 'detail': 'A equipa não existe.'}), HTTPStatus.NOT_FOUND
 
     team = update_team(
