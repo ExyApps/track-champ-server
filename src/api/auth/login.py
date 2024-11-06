@@ -29,7 +29,6 @@ def login():
         return jsonify({ 'error': 'Essa combinação de email/password não existe', 'field': 'email' }), HTTPStatus.UNAUTHORIZED
 
     session_token = generate_session_cookie()
-    print(session_token)
     authentication.store_session_token(user.id, session_token)
 
     info = user.to_json()
