@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from flask import request, jsonify, g, make_response
 from http import HTTPStatus
@@ -37,7 +38,7 @@ def login():
         'success': True,
         'info': info
     })
-    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000' # or your React app's origin
+    response.headers['Access-Control-Allow-Origin'] = os.getenv('WEBSITE_URL') # or your React app's origin
     response.headers['Access-Control-Allow-Credentials'] = 'true' # crucial for cookies
     response.set_cookie(
         'session_token',
