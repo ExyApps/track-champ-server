@@ -4,6 +4,7 @@ from http import HTTPStatus
 from src.database.wrapper.teams import user_is_in_team
 from src.database.wrapper.teams import get_team_by_id
 from src.database.wrapper.teams import get_team_users
+from src.database.wrapper.teams import get_team_admins
 
 from src.database.wrapper.authentication import get_user
 
@@ -31,6 +32,7 @@ def get(id):
         'success': True,
         'info': {
             'team': team,
-            'users': members
+            'users': members,
+            'admin_ids': get_team_admins(id)
         }
     }), HTTPStatus.OK

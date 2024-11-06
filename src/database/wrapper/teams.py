@@ -171,6 +171,24 @@ def get_team_users(id: int) -> List[int]:
     """
     ids = [tu.user_id for tu in TeamUser.query.filter_by(team_id=id).all()]
     return ids
+
+
+def get_team_admins(id: int) -> List[int]:
+    """
+    Get a list of the users' id that are admins in a team
+
+    Parameters
+    ----------
+        id: int
+            The team's id
+
+    Returns
+    -------
+        List[int]
+            A list of all the users' ids
+    """
+    ids = [tu.user_id for tu in TeamUser.query.filter_by(team_id=id).all() if tu.is_admin]
+    return ids
     
 
 def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False) -> None:
