@@ -199,6 +199,26 @@ def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False) -> None
     db.session.commit()
 
 
+def user_is_in_team(user_id: int, team_id: int) -> bool:
+    """
+    Checks if a user has access to a team's details
+
+    Parameters
+    ----------
+        user_id: int
+            The user's id
+
+        team_id: int
+            The team's id
+
+    Returns
+    -------
+        bool
+            If the user has access or not to the team's details
+    """
+    return Team.query.filter_by(id=team_id).first().public or TeamUser.query.filter_by(user_id=user_id, team_id=team_id).first() is not None
+
+
 def delete_team_users(id: int) -> None:
     """
     Delete all the rows with the team's id
