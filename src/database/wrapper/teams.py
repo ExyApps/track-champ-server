@@ -155,9 +155,9 @@ def get_team_member_count(id: int) -> int:
     return TeamUser.query.filter_by(team_id=id).count()
 
 
-def get_team_users(id: int) -> List[int]:
+def get_team_users(id: int) -> List[TeamUser]:
     """
-    Get a list of the users' id that are in a team
+    Get a list of the team users that are on a team
 
     Parameters
     ----------
@@ -166,11 +166,10 @@ def get_team_users(id: int) -> List[int]:
 
     Returns
     -------
-        List[int]
-            A list of all the users' ids
+        List[TeamUser]
+            A list of all the team users
     """
-    ids = [tu.user_id for tu in TeamUser.query.filter_by(team_id=id).all()]
-    return ids
+    return TeamUser.query.filter_by(team_id=id).all()
 
 
 def get_team_admins(id: int) -> List[int]:
@@ -191,7 +190,7 @@ def get_team_admins(id: int) -> List[int]:
     return ids
     
 
-def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False) -> None:
+def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False, is_creator: bool = False) -> None:
     """
     Adds a user to a team
 
@@ -209,7 +208,8 @@ def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False) -> None
     tu = TeamUser(
         user_id = user_id,
         team_id = team_id,
-        is_admin = is_admin
+        is_admin = is_admin,
+        is_creator = is_creator
     )
 
     db = app.extensions['sqlalchemy']

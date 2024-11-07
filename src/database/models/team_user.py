@@ -8,6 +8,7 @@ class TeamUser(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('acc_user.id'), primary_key=True, nullable=False)
     team_id = db.Column(db.Integer, db.ForeignKey('acc_team.id'), primary_key=True, nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+    is_creator = db.Column(db.Boolean, default=False)
 
     joined_in = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
@@ -27,6 +28,7 @@ class TeamUser(db.Model):
             'user_id': self.user_id,
             'team_id': self.team_id,
             'is_admin': self.is_admin,
+            'is_creator': self.is_creator,
             'joined_in': self.joined_in,
         }
 

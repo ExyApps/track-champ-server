@@ -22,11 +22,15 @@ def get(id):
         return { 'success': False, 'detail': 'Não tens acesso a este recurso'}, HTTPStatus.FORBIDDEN
     
     team = get_team_by_id(id).to_json()
-    members_ids = get_team_users(id)
+    members_objs = get_team_users(id)
 
     members = []
-    for m_id in members_ids:
-        members.append(get_user(m_id).to_json())
+    for m in members_objs:
+        members.append(
+            get_user(m.user_id).to_json() | {'is_admin': m.is_admin, 'is_creator': m.is_creator}
+        )
+
+    members.sort(key=lambda m: (m['is_creator'], m['is_admin'], f"{m['first_name']} {m['last_name']}"))
 
     return jsonify({
         'success': True,

@@ -18,6 +18,6 @@ def create():
 
     team = create_team(payload['name'], payload['description'], payload['public'], payload.get('profile_image', None))
     
-    add_user_to_team(g.user_id, team.id, True)
+    add_user_to_team(g.user_id, team.id, is_admin=True, is_creator=True)
 
     return jsonify({'success': True, 'team': team.to_json()}), HTTPStatus.CREATED
