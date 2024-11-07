@@ -45,4 +45,8 @@ def create_app(config_class=Config): # Function to create the app with a configu
     setup_logs(app)
     setup_body_verification(app)
 
+    @app.route('/', methods=['GET'])
+    def home():
+        return 'v0.2.2'
+
     return app
