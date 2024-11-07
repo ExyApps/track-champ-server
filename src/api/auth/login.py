@@ -40,6 +40,7 @@ def login():
     response.set_cookie(
         'session_token',
         session_token,
+        path='/',
         expires=datetime.fromisocalendar(2026, 2, 1),
         httponly=True,
         secure='localhost' not in os.getenv('WEBSITE_URL'),
