@@ -42,7 +42,8 @@ def login():
         session_token,
         expires=datetime.fromisocalendar(2026, 2, 1),
         httponly=True,
-        secure='localhost' not in os.getenv('WEBSITE_URL')
+        secure='localhost' not in os.getenv('WEBSITE_URL'),
+        samesite=None
     )
 
     return response, HTTPStatus.OK
