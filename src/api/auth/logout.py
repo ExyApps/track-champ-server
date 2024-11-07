@@ -18,8 +18,14 @@ def logout():
     authentication.delete_session_token(g.user_id, g.session_token)
 
     response = make_response({'success': True})
-    response.set_cookie('session_token', '', expires=0, path='/', httponly=True, samesite='Lax')
-    response.headers['Access-Control-Allow-Origin'] = os.getenv('WEBSITE_URL') # or your React app's origin
-    response.headers['Access-Control-Allow-Credentials'] = 'true' # crucial for cookies
+    response.set_cookie(
+        'session_token',
+        '',
+        path='/',
+        expires=0,
+        httponly=True,
+        secure='localhost' not in os.getenv('WEBSITE_URL'),
+        samesite='None' if 'localhost' not in os.getenv('WEBSITE_URL') else None
+    )
 
     return response, HTTPStatus.OK

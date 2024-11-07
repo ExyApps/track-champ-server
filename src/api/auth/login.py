@@ -44,7 +44,7 @@ def login():
         expires=datetime.fromisocalendar(2026, 2, 1),
         httponly=True,
         secure='localhost' not in os.getenv('WEBSITE_URL'),
-        samesite='None'
+        samesite='None' if 'localhost' not in os.getenv('WEBSITE_URL') else None
     )
 
     return response, HTTPStatus.OK
