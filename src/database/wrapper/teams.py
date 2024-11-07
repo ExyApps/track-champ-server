@@ -214,6 +214,25 @@ def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False, is_crea
     db.session.commit()
 
 
+def exit_team(user_id: int, team_id: int) -> None:
+    """
+    Remove a user from a team
+
+    Parameters
+    ----------
+        user_id: int
+            The user's id
+
+        team_id: int
+            The team's id
+    """
+    tu = TeamUser.query.filter_by(user_id=user_id, team_id=team_id).first()
+
+    db = app.extensions['sqlalchemy']
+    db.session.delete(tu)
+    db.session.commit()
+
+
 def user_is_in_team(user_id: int, team_id: int) -> bool:
     """
     Checks if a user has is in a team
