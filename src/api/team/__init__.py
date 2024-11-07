@@ -7,5 +7,6 @@ from .enter import *
 from .exit import *
 from .get import *
 from .get_teams import *
+from .invite import *
 from .delete import *
 from .update import *

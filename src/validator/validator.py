@@ -90,11 +90,11 @@ class Validator:
 
     def _validate_bool(var: bool) -> Tuple[Union[bool, str]]:
         """
-        General function that validates the common elements of a string argument
+        General function that validates the common elements of a boolean argument
 
         Parameters
         ----------
-            var: str
+            var: bool
                 The value sent in the payload
 
         Returns
@@ -103,7 +103,24 @@ class Validator:
                 The success status and a message if the checks fail
         """
         return True, ''
-    
+
+
+    def _validate_int(var: int) -> Tuple[Union[bool, str]]:
+        """
+        General function that validates the common elements of an integer argument
+
+        Parameters
+        ----------
+            var: int
+                The value sent in the payload
+
+        Returns
+        -------
+            Tuple[Union[bool, str]]
+                The success status and a message if the checks fail
+        """
+        return True, ''
+       
 
     #SPECIFIC METHODS
     @staticmethod

@@ -213,3 +213,20 @@ def get_user_by_session_token(token: str) -> Union[int, None]:
     """
     row = SessionToken.query.filter_by(token = token).first()
     return row.user_id if row else None
+
+
+def get_user_by_username(username: str) -> Union[User, None]:
+    """
+    Get the user by their username
+
+    Parameters
+    ----------
+        username: str
+            The usernmae of the user
+
+    Returns
+    -------
+        Union[int, None]
+            The user if it exists, otherwise None
+    """
+    return User.query.filter_by(username=username).first()
