@@ -4,6 +4,7 @@ from http import HTTPStatus
 from src.database.wrapper.teams import delete_team
 from src.database.wrapper.teams import delete_team_users
 from src.database.wrapper.teams import get_team_by_id
+from src.database.wrapper.teams import user_is_creator
 
 from . import team_bp
 
@@ -22,6 +23,9 @@ def delete(id: int):
     
     if not get_team_by_id(id):
         return jsonify({'success': False, 'detail': 'A equipa não existe.'}), HTTPStatus.NOT_FOUND
+    
+    if not user_is_creator(g.user_id, id):
+        return jsonify({'success': False, 'detail': 'Não tens permissões.'}), HTTPStatus.FORBIDDEN
 
     delete_team(id)
     delete_team_users(id)

@@ -169,6 +169,31 @@ def get_team_users(id: int) -> List[TeamUser]:
     return TeamUser.query.filter_by(team_id=id).all()
 
 
+def user_is_creator(user_id: int, team_id: int) -> bool:
+    """
+    Check if a user is the creator of the team
+
+    Parameters
+    ----------
+        user_id: int
+            The user's id
+
+        team_id: int
+            The team's id
+
+    Returns
+    -------
+        bool
+            If the user is the creator or not
+    """
+    tu = TeamUser.query.filter_by(user_id=user_id, team_id=team_id).first()
+
+    if not tu:
+        return False
+    
+    return tu.is_creator
+
+
 def get_team_admins(id: int) -> List[int]:
     """
     Get a list of the users' id that are admins in a team

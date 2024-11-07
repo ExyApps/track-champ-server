@@ -47,6 +47,6 @@ def create_app(config_class=Config): # Function to create the app with a configu
 
     @app.route('/', methods=['GET'])
     def home():
-        return 'v0.4.0'
+        return 'v0.5.0'
 
     return app
