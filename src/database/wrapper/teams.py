@@ -216,6 +216,26 @@ def add_user_to_team(user_id: int, team_id: int, is_admin: bool = False, is_crea
 
 def user_is_in_team(user_id: int, team_id: int) -> bool:
     """
+    Checks if a user has is in a team
+
+    Parameters
+    ----------
+        user_id: int
+            The user's id
+
+        team_id: int
+            The team's id
+
+    Returns
+    -------
+        bool
+            If the user is or not in a team
+    """
+    return TeamUser.query.filter_by(user_id=user_id, team_id=team_id).first() is not None
+
+
+def user_can_see_team_details(user_id: int, team_id: int) -> bool:
+    """
     Checks if a user has access to a team's details
 
     Parameters
@@ -231,7 +251,7 @@ def user_is_in_team(user_id: int, team_id: int) -> bool:
         bool
             If the user has access or not to the team's details
     """
-    return Team.query.filter_by(id=team_id).first().public or TeamUser.query.filter_by(user_id=user_id, team_id=team_id).first() is not None
+    return Team.query.filter_by(id=team_id).first().public or user_is_in_team(user_id, id)
 
 
 def delete_team_users(id: int) -> None:

@@ -3,6 +3,7 @@ from flask import Blueprint
 team_bp = Blueprint('team', __name__)
 
 from .create import *
+from .enter import *
 from .get import *
 from .get_teams import *
 from .delete import *
