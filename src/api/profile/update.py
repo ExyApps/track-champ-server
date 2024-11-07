@@ -32,7 +32,7 @@ def update():
         if os.path.exists(image_path):
             os.remove(image_path)
 
-    authentication.update_user(g.user_id, payload, image_path if profile_image else None)
+    authentication.update_user(g.user_id, payload, ('/' + image_path) if profile_image else None)
     user = authentication.get_user(g.user_id)
 
     info = user.to_json()
