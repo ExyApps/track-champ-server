@@ -14,8 +14,8 @@ from src.api.team import team_bp
 from src.api.test import test_bp
 
 NEEDED_PATHS = [
-    'files',
-    'files/profile_images'
+    'static',
+    'static/images'
 ]
 
 def create_app(config_class=Config): # Function to create the app with a configurable config class

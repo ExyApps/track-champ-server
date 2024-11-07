@@ -86,7 +86,7 @@ def get_user(_id: int):
     return User.query.filter_by(id=_id).first()
 
 
-def update_user(id: int, payload: dict):
+def update_user(id: int, payload: dict, profile_image: Union[str, None]):
     """
     Update the user's information
 
@@ -100,6 +100,7 @@ def update_user(id: int, payload: dict):
         setattr(user, k, v)
 
     user.birthday = datetime.strptime(payload['date'], '%Y-%m-%d')
+    user.profile_image = profile_image
 
     db = app.extensions['sqlalchemy']
     db.session.commit()

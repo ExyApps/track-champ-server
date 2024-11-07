@@ -22,17 +22,17 @@ def update():
 
     profile_image = payload['profile_image']
 
-    image_path = f'files/profile_images/user{g.user_id}.png'
+    image_path = f'static/images/user_{g.user_id}.png'
     if profile_image is not None:
-        img_type, content = profile_image.split(',')
+        img_type, _ = profile_image.split(',')
         with open(image_path, "wb") as fh:
             fh.write(base64.b64decode(payload['profile_image']))
-        payload['profile_image'] = f'files/profile_images/user{g.user_id}.png'
+        payload['profile_image'] = image_path
     else:
         if os.path.exists(image_path):
             os.remove(image_path)
 
-    authentication.update_user(g.user_id, payload)
+    authentication.update_user(g.user_id, payload, image_path if profile_image else None)
     user = authentication.get_user(g.user_id)
 
     info = user.to_json()
