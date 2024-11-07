@@ -37,14 +37,11 @@ def login():
         'success': True,
         'info': info
     })
-    response.headers['Access-Control-Allow-Origin'] = os.getenv('WEBSITE_URL') # or your React app's origin
-    response.headers['Access-Control-Allow-Credentials'] = 'true' # crucial for cookies
     response.set_cookie(
         'session_token',
         session_token,
         expires=datetime.fromisocalendar(2026, 2, 1),
         httponly=True,
-        samesite='Lax'
     )
 
     return response, HTTPStatus.OK
