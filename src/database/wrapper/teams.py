@@ -84,11 +84,8 @@ def get_user_teams(id: int) -> List[Team]:
         id: int
             The user's id
     """
-    teams = Team.query.select_from(
-        TeamUser.query.join(Team, TeamUser.team_id == Team.id)
-    ).filter(TeamUser.user_id == id).all()
-
-    return teams
+    tus = TeamUser.query.filter_by(user_id = id).all()
+    return [get_team_by_id(t.team_id) for t in tus]
 
 
 def get_public_teams(search: str = '', offset: int = 0, limit: int = 10, ignore_ids = []) -> List[Team]:
