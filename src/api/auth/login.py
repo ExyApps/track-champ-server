@@ -42,6 +42,7 @@ def login():
         session_token,
         expires=datetime.fromisocalendar(2026, 2, 1),
         httponly=True,
+        secure=True
     )
 
     return response, HTTPStatus.OK
