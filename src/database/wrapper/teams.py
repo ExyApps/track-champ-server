@@ -251,7 +251,7 @@ def user_can_see_team_details(user_id: int, team_id: int) -> bool:
         bool
             If the user has access or not to the team's details
     """
-    return Team.query.filter_by(id=team_id).first().public or user_is_in_team(user_id, id)
+    return Team.query.filter_by(id=team_id).first().public or user_is_in_team(user_id, team_id)
 
 
 def delete_team_users(id: int) -> None:
