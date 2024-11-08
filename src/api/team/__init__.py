@@ -10,3 +10,5 @@ from .get_teams import *
 from .invite import *
 from .delete import *
 from .update import *
+from .promote import *
+from .depromote import *

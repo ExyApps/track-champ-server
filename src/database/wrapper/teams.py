@@ -313,3 +313,42 @@ def delete_team_users(id: int) -> None:
     for row in rows:
         db.session.delete(row)
     db.session.commit()
+
+
+def promote_team_member(user_id: int, team_id: int) -> None:
+    """
+    Promote a user to admin
+
+    Parameters
+    ----------
+        user_id: int
+            The user's id
+
+        team_id: int
+            The team's id
+    """
+    tu = TeamUser.query.filter_by(user_id=user_id, team_id=team_id).first()
+    tu.is_admin = True
+
+    db = app.extensions['sqlalchemy']
+    db.session.add(tu)
+    db.session.commit()
+
+def depromote_team_member(user_id: int, team_id: int) -> None:
+    """
+    Depromote a user to admin
+
+    Parameters
+    ----------
+        user_id: int
+            The user's id
+
+        team_id: int
+            The team's id
+    """
+    tu = TeamUser.query.filter_by(user_id=user_id, team_id=team_id).first()
+    tu.is_admin = False
+
+    db = app.extensions['sqlalchemy']
+    db.session.add(tu)
+    db.session.commit()
