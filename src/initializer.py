@@ -1,7 +1,7 @@
 import os
 from flask import Flask, jsonify
 from flask_cors import CORS
-from config import Config
+from config import ProdConfig
 from src.database.models import *
 from http import HTTPStatus
 
@@ -19,10 +19,8 @@ NEEDED_PATHS = [
     'static/images'
 ]
 
-def create_app(config_class=Config): # Function to create the app with a configurable config class
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-
-    print(os.path.join(project_root, 'static'))
+def create_app(config_class=ProdConfig): # Function to create the app with a configurable config class
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ProdConfig.PROJECT_PATH_JOINER))
 
     app = Flask(
         __name__,
@@ -57,7 +55,7 @@ def create_app(config_class=Config): # Function to create the app with a configu
 
     @app.route('/', methods=['GET'])
     def home():
-        return 'v0.6.3'
+        return 'v0.6.4'
     
     @app.route('/favicon.ico')
     def favicon():
