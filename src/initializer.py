@@ -20,7 +20,7 @@ NEEDED_PATHS = [
 ]
 
 def create_app(config_class=ProdConfig): # Function to create the app with a configurable config class
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ProdConfig.PROJECT_PATH_JOINER))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), config_class.PROJECT_PATH_JOINER))
 
     app = Flask(
         __name__,
