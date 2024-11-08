@@ -7,7 +7,7 @@ class Team(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=False)
-    description = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(100), nullable=False)
     public = db.Column(db.Boolean, default=False)
     profile_image = db.Column(db.String(50), nullable=True)
 
