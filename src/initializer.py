@@ -1,8 +1,9 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from config import Config
 from src.database.models import *
+from http import HTTPStatus
 
 from src.endpoint_wrappers.context import setup_body_verification
 from src.endpoint_wrappers.context import setup_context
@@ -19,7 +20,16 @@ NEEDED_PATHS = [
 ]
 
 def create_app(config_class=Config): # Function to create the app with a configurable config class
-    app = Flask(__name__)
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+    print(os.path.join(project_root, 'static'))
+
+    app = Flask(
+        __name__,
+        static_folder=os.path.join(project_root, 'static'),       # Absolute path to the static folder
+        static_url_path='/static',                                 # URL prefix for static files
+    )
+
     CORS(
         app,
         supports_credentials=True
@@ -47,6 +57,34 @@ def create_app(config_class=Config): # Function to create the app with a configu
 
     @app.route('/', methods=['GET'])
     def home():
-        return 'v0.6.2'
+        return 'v0.6.3'
+    
+    @app.route('/favicon.ico')
+    def favicon():
+        return '', 204
+    
+    # ERROR HANDLING
+    @app.errorhandler(KeyError)
+    def handle_key_error(e):
+        """
+        Catch the error if there is a required field missing in the request
+        """
+        app.logger.exception('An unhandled KeyError exception occured')
+
+        return jsonify({
+            'message': 'Pedido inválido, confirme que envia toda a informação necessária'
+        }), HTTPStatus.BAD_REQUEST
+
+
+    @app.errorhandler(Exception)
+    def handle_error(e):
+        """
+        Catch any error that was not desired
+        """
+        app.logger.exception('An unhandled exception occured')
+
+        return jsonify({
+            'message': 'Algo inesperado aconteceu, pedimos desculpa pelo incómodo'
+        }), HTTPStatus.INTERNAL_SERVER_ERROR
 
     return app

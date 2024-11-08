@@ -38,9 +38,10 @@ def setup_logs(app: Flask) -> None:
         """
         Record in the log file the important information regarding the response
         """
+
         app.logger.info(f"""Response: {response.status_code} {request.path}
             ID: {request.id}
-            Data: {response.get_data().decode()}"""
+            Data: {response.get_data().decode() if 'json' in response.headers['Content-Type'] else ''}"""
         )
 
         return response #Important to return the response
