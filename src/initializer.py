@@ -26,7 +26,7 @@ def create_app(config_class=Config): # Function to create the app with a configu
 
     app = Flask(
         __name__,
-        static_folder=os.path.join(project_root, 'static'),       # Absolute path to the static folder
+        static_folder='static',       # Absolute path to the static folder
         static_url_path='/static',                                 # URL prefix for static files
     )
 
