@@ -20,7 +20,7 @@ NEEDED_PATHS = [
 ]
 
 def create_app(config_class=Config): # Function to create the app with a configurable config class
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
     print(os.path.join(project_root, 'static'))
 
