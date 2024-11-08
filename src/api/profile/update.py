@@ -21,20 +21,22 @@ def update():
         payload['gender'] = match_gender(payload['gender'])
 
     profile_image = payload['profile_image']
-
     image_path = f'static/images/user_{g.user_id}'
-    if profile_image is not None:
-        img_type, content = profile_image.split(',')
-        image_path += '.' + img_type.split(';')[0].split('/')[1]
-        with open(image_path, "wb") as fh:
-            fh.write(base64.b64decode(content))
-        payload['profile_image'] = image_path
-    else:
+
+    # Delete previous images
+    if profile_image is None:
         for type in ['jpg', 'png', 'jpeg']:
             if os.path.exists(f'{image_path}.{type}'):
                 os.remove(f'{image_path}.{type}')
 
-    authentication.update_user(g.user_id, payload, ('/' + image_path) if profile_image else None)
+    elif '/static/images/' not in profile_image:
+        img_type, content = profile_image.split(',')
+        image_path += '.' + img_type.split(';')[0].split('/')[1]
+        with open(image_path, "wb") as fh:
+            fh.write(base64.b64decode(content))
+        payload['profile_image'] = f'/{image_path}'
+
+    authentication.update_user(g.user_id, payload)
     user = authentication.get_user(g.user_id)
 
     info = user.to_json()
