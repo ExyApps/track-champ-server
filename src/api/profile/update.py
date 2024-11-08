@@ -24,10 +24,10 @@ def update():
 
     image_path = f'static/images/user_{g.user_id}'
     if profile_image is not None:
-        img_type, _ = profile_image.split(',')
+        img_type, content = profile_image.split(',')
         image_path += '.' + img_type.split(';')[0].split('/')[1]
         with open(image_path, "wb") as fh:
-            fh.write(base64.b64decode(payload['profile_image']))
+            fh.write(base64.b64decode(content))
         payload['profile_image'] = image_path
     else:
         for type in ['jpg', 'png', 'jpeg']:
