@@ -23,7 +23,7 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.id} - {self.first_name} {self.last_name} - {self.username} - {self.email}>'
 
-    def to_json(self, excluded_fields = []):
+    def to_json(self, *excluded_fields):
         """
         Transform the class information to a dictionary, and remove unwanted fields
 

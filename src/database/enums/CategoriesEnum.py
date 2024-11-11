@@ -1,9 +1,15 @@
 from enum import Enum
 
-class TestEnum(Enum):
-    BODY = {'label': 'Teste Corporal', 'model': 'BodyTest'}
+class CategoriesEnum(Enum):
+    TRACK = {
+        'label': 'Testes de Pista',
+        'tests': [
+            'Células'
+        ]
+    }
+    # BODY = {'label': 'Teste Corporal'}
 
-def match_test(label: str) -> TestEnum:
+def match_test(label: str) -> CategoriesEnum:
     """
     Find the TestEnum that corresponds to the value
 
@@ -22,7 +28,7 @@ def match_test(label: str) -> TestEnum:
         ValueError
             If no match is found
     """
-    for test in TestEnum:
+    for test in CategoriesEnum:
         if test.value['label'].lower() == label.lower():
             return test
     raise ValueError('This should never happen')

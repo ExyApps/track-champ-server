@@ -9,7 +9,6 @@ from src.initializer import create_app
 load_dotenv()
 
 if os.environ.get('FLASK_ENV') == 'development':
-    print('here')
     app = create_app(config_class=DevConfig)
 else:
     app = create_app()

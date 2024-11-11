@@ -18,7 +18,7 @@ class Team(db.Model):
         return f'<Team {self.id} - {self.name} - {self.public}>'
     
 
-    def to_json(self, excluded_fields = []):
+    def to_json(self, *excluded_fields):
         """
         Transform the class information to a dictionary, and remove unwanted fields
 

@@ -23,7 +23,7 @@ class WeightTest(db.Model):
     def __repr__(self):
         return f'<WeightTest {self.user_id} {self.weight} {self.created_in}>'
     
-    def to_json(self, excluded_fields = []):
+    def to_json(self, *excluded_fields):
         """
         Transform the class information to a dictionary, and remove unwanted fields
 

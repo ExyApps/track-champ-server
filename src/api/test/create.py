@@ -1,7 +1,7 @@
 from flask import request, jsonify, g
 from http import HTTPStatus
 
-from src.database.enums.TestEnum import match_test
+from src.database.enums.CategoriesEnum import match_test
 
 from . import test_bp
 
