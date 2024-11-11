@@ -53,7 +53,8 @@ def save_category(name: str) -> TestCategory:
     db = app.extensions['sqlalchemy']
     db.session.add(cat)
     db.session.commit()
-
+    db.session.refresh(cat)
+    
     return cat
 
 
@@ -109,3 +110,6 @@ def save_test(name: str, category: int) -> TestTest:
     db = app.extensions['sqlalchemy']
     db.session.add(test)
     db.session.commit()
+    db.session.refresh(test)
+
+    return test

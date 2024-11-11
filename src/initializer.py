@@ -74,7 +74,7 @@ def create_app(config_class=ProdConfig): # Function to create the app with a con
 
     @app.route('/', methods=['GET'])
     def home():
-        return 'v0.6.4'
+        return 'v0.6.5'
     
     @app.route('/favicon.ico')
     def favicon():
