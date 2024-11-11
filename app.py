@@ -12,5 +12,3 @@ if os.environ.get('FLASK_ENV') == 'development':
     app = create_app(config_class=DevConfig)
 else:
     app = create_app()
-
-# app.run()
