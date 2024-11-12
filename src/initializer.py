@@ -55,7 +55,7 @@ def create_app(config_class=ProdConfig): # Function to create the app with a con
         for test_category in CategoriesEnum:
             category = get_category_by_name(test_category.value['label'])
             if not category:
-                save_category(test_category.value['label'])
+                category = save_category(test_category.value['label'])
 
             for test in test_category.value.get('tests', []):
                 t = get_test_by_name(test)
@@ -74,7 +74,7 @@ def create_app(config_class=ProdConfig): # Function to create the app with a con
 
     @app.route('/', methods=['GET'])
     def home():
-        return 'v0.6.7'
+        return 'v0.6.8'
     
     @app.route('/favicon.ico')
     def favicon():
