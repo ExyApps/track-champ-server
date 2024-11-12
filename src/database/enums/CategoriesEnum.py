@@ -2,9 +2,9 @@ from enum import Enum
 
 class CategoriesEnum(Enum):
     TRACK = {
-        'label': 'Testes de Pista',
+        'label': 'Pista',
         'tests': [
-            'Células'
+            'Corridas'
         ]
     }
     # BODY = {'label': 'Teste Corporal'}

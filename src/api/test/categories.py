@@ -18,4 +18,4 @@ def categories():
     for c in categories:
         c['tests'] = [t.to_json('category') for t in get_category_tests(c['id'])]
 
-    return {'success': True, 'categories': categories}, HTTPStatus.CREATED
+    return {'success': True, 'categories': categories}, HTTPStatus.OK
