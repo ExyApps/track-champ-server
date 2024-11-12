@@ -29,13 +29,12 @@ class Validator:
                 continue
 
             # Make type verifications
-            type_validator = f'_validate_{type(v).__name__}'
-            verifier = getattr(Validator, type_validator)
-            valid, message = verifier(v)
+            if isinstance(v, str):
+                valid, message = Validator._validate_str(v)
 
-            if not valid:
-                validation_errors.append({ 'field': k, 'error': message })
-                continue
+                if not valid:
+                    validation_errors.append({ 'field': k, 'error': message })
+                    continue
 
             # Make field specific verifications
             verifier = getattr(Validator, f'_validate_{k}', lambda _: (True, ''))
@@ -85,40 +84,6 @@ class Validator:
         if Validator._is_empty(var):
             return False, "Este campo é obrigatório."
         
-        return True, ''
-    
-
-    def _validate_bool(var: bool) -> Tuple[Union[bool, str]]:
-        """
-        General function that validates the common elements of a boolean argument
-
-        Parameters
-        ----------
-            var: bool
-                The value sent in the payload
-
-        Returns
-        -------
-            Tuple[Union[bool, str]]
-                The success status and a message if the checks fail
-        """
-        return True, ''
-
-
-    def _validate_int(var: int) -> Tuple[Union[bool, str]]:
-        """
-        General function that validates the common elements of an integer argument
-
-        Parameters
-        ----------
-            var: int
-                The value sent in the payload
-
-        Returns
-        -------
-            Tuple[Union[bool, str]]
-                The success status and a message if the checks fail
-        """
         return True, ''
        
 

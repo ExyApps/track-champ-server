@@ -6,3 +6,6 @@ from . import team
 from . import team_user
 from . import user
 from .test_category import TestCategory
+from .test_event import TestEvent
+
+from .tests.race_test import RaceTest
