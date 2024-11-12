@@ -1,8 +1,6 @@
 from flask import request, jsonify, g
 from http import HTTPStatus
 
-from src.database.enums.CategoriesEnum import match_test
-
 from . import test_bp
 
 @test_bp.route('/create', methods=['POST'])
@@ -15,6 +13,6 @@ def create():
     
     payload = request.json
 
-    test = match_test(payload['test'])
+    # test = match_test(payload['test'])
 
     return {}, HTTPStatus.CREATED

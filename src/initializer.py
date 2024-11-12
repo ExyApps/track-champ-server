@@ -15,12 +15,12 @@ from src.database.wrapper.tests import save_category
 from src.database.wrapper.tests import get_test_by_name
 from src.database.wrapper.tests import save_test
 
+from src.database.test_match import TestMatch
+
 from src.api.auth import auth_bp
 from src.api.profile import profile_bp
 from src.api.team import team_bp
 from src.api.test import test_bp
-
-from src.database.enums.CategoriesEnum import CategoriesEnum
 
 NEEDED_PATHS = [
     'static',
@@ -52,12 +52,12 @@ def create_app(config_class=ProdConfig): # Function to create the app with a con
     with app.app_context():
         db.create_all()
 
-        for test_category in CategoriesEnum:
-            category = get_category_by_name(test_category.value['label'])
+        for cat, tests in TestMatch.get_test_structure().items():
+            category = get_category_by_name(cat)
             if not category:
-                category = save_category(test_category.value['label'])
+                category = save_category(cat)
 
-            for test in test_category.value.get('tests', []):
+            for test in tests:
                 t = get_test_by_name(test)
                 if not t:
                     save_test(test, category.id)
@@ -74,7 +74,7 @@ def create_app(config_class=ProdConfig): # Function to create the app with a con
 
     @app.route('/', methods=['GET'])
     def home():
-        return 'v0.6.8'
+        return 'v0.6.9'
     
     @app.route('/favicon.ico')
     def favicon():

@@ -5,5 +5,4 @@ from . import session_token
 from . import team
 from . import team_user
 from . import user
-from . import body_test
 from .test_category import TestCategory
